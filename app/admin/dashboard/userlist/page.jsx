@@ -28,7 +28,7 @@ const page = () => {
             setPassword(null)
             setUser(null)
         }
-        if (errorUserDeletegt) {
+        if (errorUserDelete) {
             errorToast(errorUserDelete)
         }
     }, [successUserDelete, errorUserDelete])

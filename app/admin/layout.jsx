@@ -22,7 +22,6 @@ const layout = ({ children }) => {
     return (
         <div>
             <ProtectedRoute>
-
                 {children}
             </ProtectedRoute>
         </div>

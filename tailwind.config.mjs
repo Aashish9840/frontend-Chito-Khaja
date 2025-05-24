@@ -6,10 +6,26 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        sm: "620px",
+        md: "730px",
+        lg: "990px",
+        xl: "1150px",
+        "2xl": "1450px",
+      },
+    },
+    fontFamily: {
+      dm_sans: ["DM Sans", "sans-serif"],
+      commissioner: ["Commissioner", "sans-serif"],
+      inter: ["Inter", "sans-serif"],
+      liber: ["Libre Baskerville", "serif"],
+    },
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        "bulk-primary": "#64748b",
       },
     },
   },

@@ -86,7 +86,7 @@ const Dashboard = () => {
     }, [successEditFood, errorEditFood])
 
     return (
-        <div className="flex min-h-screen">
+        <div className="flex min-h-screen ">
             <SidePanel />
             <div className="w-full md:max-w-[85%] bg-slate-50">
                 <AdminInfo />

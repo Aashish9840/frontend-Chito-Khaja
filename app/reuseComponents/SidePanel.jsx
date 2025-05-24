@@ -18,7 +18,7 @@ const SidePanel = () => {
                     width={200}
                     className="h-[40px] w-[40px] md:h-[60px] md:w-[60px]"
                 />
-                <h1 className={` text-[14px] md:text-xl font-bold`}>Food Delivery</h1>
+                <h1 className={` text-[14px] md:text-xl font-bold`}>Chito Khaja</h1>
             </Link>
 
             <div className="flex flex-col justify-between h-[75vh]">
