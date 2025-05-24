@@ -80,6 +80,7 @@ const Admin = () => {
                     },
                   })}
                 />
+
                 {errors.email && (
                   <p className="text-red-500 text-[10px] absolute top-full">
                     {errors.email.message}
