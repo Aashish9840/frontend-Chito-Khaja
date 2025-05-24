@@ -28,12 +28,10 @@ const page = () => {
             setPassword(null)
             setUser(null)
         }
-        if (errorRoleUpdate) {
+        if (errorUserDeletegt) {
             errorToast(errorUserDelete)
         }
-    }, [successUserDelete, errorRoleUpdate])
-
-
+    }, [successUserDelete, errorUserDelete])
     useEffect(() => {
 
         if (successRoleUpdate) {
@@ -43,7 +41,8 @@ const page = () => {
             return errorToast(errorRoleUpdate)
         }
     }, [successRoleUpdate, errorRoleUpdate])
-    console.log(successRoleUpdate, errorRoleUpdate)
+
+
     return (
         <div className="flex min-h-screen">
             <SidePanel />
