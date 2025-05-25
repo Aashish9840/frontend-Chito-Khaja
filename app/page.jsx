@@ -1,6 +1,5 @@
 
 import Header from "./reuseComponents/Header"
-import MenuSection from './components/MenuSection'
 import Hero from './components/Hero'
 import FoodList from './components/FoodList'
 export default function Home() {
@@ -9,7 +8,6 @@ export default function Home() {
       <div className=" px-3 container  h-screen">
         <Header />
         <Hero />
-        <MenuSection />
         <FoodList />
       </div >
     </>
