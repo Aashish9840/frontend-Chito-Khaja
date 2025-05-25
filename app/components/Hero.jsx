@@ -26,7 +26,8 @@ const Hero = () => {
         }
     ];
 
-    const backImage = ["/Hero/food_banner_1.jpg", "/Hero/food_banner_2.jpg", "/Hero/food_banner_3.jpg", "/Hero/food_banner_4.jpg", "/Hero/food_banner_5.jpg"]
+
+    const backImage = ["/Hero/food_banner_1.jpg", "/Hero/food_banner_2.jpg", "/Hero/food_banner_3.jpg", "/Hero/food_banner_4g.jpg", "/Hero/food_banner_5.jpg"]
     const [heroIndex, setHeroIndex] = useState(0)
 
     useEffect(() => {
@@ -42,6 +43,7 @@ const Hero = () => {
         }, 3000)
         return () => clearTimeout(timer);
     }, [heroIndex])
+    console.log(heroIndex)
     return (
         <div className='container my-4 h-[40vh] md:h-[60vh] lg:h-[85vh] relative'>
             <div className='absolute inset-0 h-full bg-red-100'>
@@ -51,6 +53,7 @@ const Hero = () => {
                     height={1000}
                     alt='Hero Image'
                     className='h-full w-full object-cover object-center rounded-lg'
+                    unoptimized
                 />
             </div>
             <div className='relative  w-[90%] top-[40%] lg:top-[50%] left-[5%] z-[10] lg:w-[50%]'>
