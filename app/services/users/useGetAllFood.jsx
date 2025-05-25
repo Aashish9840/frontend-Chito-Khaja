@@ -3,17 +3,21 @@ import { useState } from "react";
 
 
 const useGetAllFood = () => {
-    const imagePath = process.env.NEXT_PUBLIC_IMAGE
-
     const [successFoodList, setSuccessFoodList] = useState(null);
     const [errorFood, setErrorFood] = useState(null);
-    const getAllFood = async () => {
+    const getAllFood = async (category) => {
 
         try {
             setSuccessFoodList(null);
             setErrorFood(null);
 
-            const request = await fetch(`/api/food/list`, {
+            const baseUrl = new URL('/api/food/list', window.location.origin)
+            if (category) {
+                baseUrl.searchParams.append("category", category)
+            }
+
+
+            const request = await fetch(baseUrl.toString(), {
                 method: "GET",
                 headers: {
                     'Content-Type': "application/json"
