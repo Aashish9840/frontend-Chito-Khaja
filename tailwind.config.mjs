@@ -9,11 +9,11 @@ export default {
     container: {
       center: true,
       screens: {
-        sm: "720px",
+        sm: "600px",
         md: "850px",
         lg: "1020px",
         xl: "1150px",
-        "2xl": "1450px",
+        "2xl": "1300px",
       },
     },
     fontFamily: {
@@ -25,6 +25,7 @@ export default {
     extend: {
       colors: {
         "bulk-primary": "#64748b",
+        "bulk-white": "#f1f1f1",
       },
     },
   },
