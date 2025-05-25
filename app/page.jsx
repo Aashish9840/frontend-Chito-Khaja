@@ -2,6 +2,7 @@
 import Header from "./reuseComponents/Header"
 import MenuSection from './components/MenuSection'
 import Hero from './components/Hero'
+import FoodList from './components/FoodList'
 export default function Home() {
   return (
     <>
@@ -9,6 +10,7 @@ export default function Home() {
         <Header />
         <Hero />
         <MenuSection />
+        <FoodList />
       </div >
     </>
   );
