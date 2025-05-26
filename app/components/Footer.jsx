@@ -25,15 +25,15 @@ const Footer = () => {
                     <main className='flex gap-2 flex-col'>
                         <h1 className='text-xl font-semibold font-commissioner text-black/90 leading-6 mb-3'>Services</h1>
                         <Link href='/category' className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Category Food</Link>
-                        <Link href='/order' className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Order History</Link>
-                        <Link href='/' className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Order History</Link>
+                        <Link href='/order' className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Order Details</Link>
+                        <Link href='/popular' className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Popular Dishes</Link>
 
                     </main>
                     <main className='flex gap-2 flex-col'>
-                        <h1 className='text-xl font-semibold font-commissioner text-black/90 leading-6 mb-3'>Services</h1>
-                        <h2 className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Category Food</h2>
+                        <h1 className='text-xl font-semibold font-commissioner text-black/90 leading-6 mb-3'>Support</h1>
+                        <h2 className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Special Offers</h2>
                         <h2 className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Order History</h2>
-                        <h2 className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Order History</h2>
+                        <h2 className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Track Order</h2>
                     </main>
                     <main className='flex gap-2 flex-col'>
                         <h1 className='text-xl font-semibold font-commissioner text-black/90 leading-6 mb-3 '>Contact</h1>
