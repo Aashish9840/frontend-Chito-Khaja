@@ -27,7 +27,7 @@ const Hero = () => {
     ];
 
 
-    const backImage = ["/Hero/food_banner_1.jpg", "/Hero/food_banner_2.jpg", "/Hero/food_banner_3.jpg", "/Hero/food_banner_4g.jpg", "/Hero/food_banner_5.jpg"]
+    const backImage = ["/Hero/food_banner_1.jpg", "/Hero/food_banner_2.jpg", "/Hero/food_banner_3.jpg", "/Hero/food_banner_4.jpg", "/Hero/food_banner_5.jpg"]
     const [heroIndex, setHeroIndex] = useState(0)
 
     useEffect(() => {
