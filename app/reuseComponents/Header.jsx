@@ -10,7 +10,7 @@ const Header = () => {
 
 
     return (
-        <div className=' pt-3 pb-1 border-b-2 border-b-gray-200 flex justify-between items-center'>
+        <div className=' container pt-3 pb-1 border-b-2 border-b-gray-200 flex justify-between items-center'>
 
             <Link href="/" className='flex gap-1 items-center'>
                 <Image

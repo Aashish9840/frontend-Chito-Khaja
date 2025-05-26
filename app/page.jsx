@@ -6,7 +6,7 @@ import Footer from './components/Footer'
 export default function Home() {
   return (
     <>
-      <div className=" px-3 container  h-screen">
+      <div className=" px-3  h-screen">
         <Header />
         <Hero />
         <FoodList />
