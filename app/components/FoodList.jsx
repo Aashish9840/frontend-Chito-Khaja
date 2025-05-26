@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import useGetAllFood from "../services/users/useGetAllFood"
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 const FoodList = () => {
     const imagePath = process.env.NEXT_PUBLIC_IMAGE
     const scrollRef = useRef(null);
@@ -32,7 +33,14 @@ const FoodList = () => {
     }, [category])
 
     const handleCategory = (foodTitle) => {
-        setCategory(foodTitle);
+
+        if (foodTitle === "All Food") {
+            setCategory(null)
+        }
+        else {
+            setCategory(foodTitle);
+        }
+
         const el = document.getElementById("foodlist");
         if (el) {
             el.scrollIntoView({ behavior: 'smooth' });
@@ -40,7 +48,7 @@ const FoodList = () => {
 
     }
 
-    const menu = [{ title: "Noodles", image: "/menu/noodles.jpg" }, { title: "Burger", image: "/menu/burger.jpg" }, { title: "Cake", image: "/menu/cake.jpg" }, { title: "Dessert", image: "/menu/dessert.jpg" }, { title: "Breakfast", image: "/menu/breakfast.jpg" }, { title: "Chicken", image: "/menu/chicken.jpg" }, { title: "French Fries", image: "/menu/french_fries.jpg" }, { title: "Salad", image: "/menu/salad.jpg" }, { title: "Fried Rice", image: "/menu/fried_rice.jpg" }, { title: "Momo", image: "/menu/momo.jpg" }, { title: "Pizza", image: "/menu/pizza.jpg" }, { title: "Salad", image: "/menu/salad.jpg" }, { title: "Sandwitch", image: "/menu/sandwich.jpg" }, { title: "Sausage", image: "/menu/sausage.jpg" }]
+    const menu = [{ title: "All Food", image: "/menu/All.jpg" }, { title: "Noodles", image: "/menu/noodles.jpg" }, { title: "Burger", image: "/menu/burger.jpg" }, { title: "Cake", image: "/menu/cake.jpg" }, { title: "Dessert", image: "/menu/dessert.jpg" }, { title: "Breakfast", image: "/menu/breakfast.jpg" }, { title: "Chicken", image: "/menu/chicken.jpg" }, { title: "French Fries", image: "/menu/french_fries.jpg" }, { title: "Salad", image: "/menu/salad.jpg" }, { title: "Fried Rice", image: "/menu/fried_rice.jpg" }, { title: "Momo", image: "/menu/momo.jpg" }, { title: "Pizza", image: "/menu/pizza.jpg" }, { title: "Salad", image: "/menu/salad.jpg" }, { title: "Sandwitch", image: "/menu/sandwich.jpg" }, { title: "Sausage", image: "/menu/sausage.jpg" }]
     return (
         <div className='container py-5'>
 
@@ -100,7 +108,7 @@ const FoodList = () => {
                                     <h1 className='text-[18px] font-semibold text-gray-800 font-dm_sans'>Rs {food.prize}</h1>
                                     <h2 className='text-[14px] font-dm_sans text-gray-700'>Discount by 2%</h2>
                                 </section>
-                                <button className='w-full bg-blue-700 text-white py-2 rounded-md text-center font-medium hover:bg-blue-600'>Add To Cart</button>
+                                <Link href={`/cart?foodId=${food._id}`} className='w-full bg-blue-700 text-white py-2 rounded-md text-center font-medium hover:bg-blue-600'>Add To Cart</Link>
                             </div>
                         ))}
 

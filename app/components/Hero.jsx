@@ -43,7 +43,6 @@ const Hero = () => {
         }, 3000)
         return () => clearTimeout(timer);
     }, [heroIndex])
-    console.log(heroIndex)
     return (
         <div className='container my-4 h-[40vh] md:h-[60vh] lg:h-[85vh] relative'>
             <div className='absolute inset-0 h-full bg-red-100'>
