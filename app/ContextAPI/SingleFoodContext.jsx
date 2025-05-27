@@ -1,9 +1,8 @@
 'use client'
-import React from 'react'
-import { createContext } from 'vm'
+import React, { createContext, useState } from 'react'
 
 
-const singleFood = createContext()
+export const singleFood = createContext()
 const SingleFoodContext = ({ children }) => {
 
     const [foodDescription, setFoodDescription] = useState(null)
