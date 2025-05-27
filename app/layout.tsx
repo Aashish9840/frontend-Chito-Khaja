@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import IsAuthContext from "./ContextAPI/IsAuthContext";
-import ArrowTop from './components/ArrowTop'
+import SingleFoodContext from "./ContextAPI/SingleFoodContext";
+import ArrowTop from "./components/ArrowTop";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,20 +31,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <IsAuthContext>
-          <Toaster
-            position="top-right"
-            reverseOrder={false}
-            gutter={10}
-            toastOptions={{
-              className: "",
-              duration: 5000,
-              removeDelay: 100,
-            }}
-          />
-          {children}
-          <ArrowTop />
-        </IsAuthContext>
+        <SingleFoodContext>
+          <IsAuthContext>
+            <Toaster
+              position="top-right"
+              reverseOrder={false}
+              gutter={10}
+              toastOptions={{
+                className: "",
+                duration: 5000,
+                removeDelay: 100,
+              }}
+            />
+            {children}
+            <ArrowTop />
+          </IsAuthContext>
+        </SingleFoodContext>
       </body>
     </html>
   );
