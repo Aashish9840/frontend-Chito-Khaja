@@ -2,11 +2,11 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
-const FoodCart = ({ food, index }) => {
+const FoodCart = ({ food }) => {
     const router = useRouter()
     const imagePath = process.env.NEXT_PUBLIC_IMAGE
     return (
-        <div className='flex py-2 flex-col gap-2 border-bulk-white border-2 shadow-md rounded-md px-4' key={index} onClick={() => { router.push(`/cart?foodId=${food._id}`) }}>
+        <div className='flex py-2 flex-col gap-2 border-bulk-white border-2 shadow-md rounded-md px-4' onClick={() => { router.push(`/cart?foodId=${food._id}`) }}>
 
             <div className='h-[250px] w-[100%] overflow-hidden'>
                 <Image
