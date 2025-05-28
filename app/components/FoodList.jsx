@@ -3,19 +3,16 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import useGetAllFood from "../services/users/useGetAllFood"
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { singleFood } from '../ContextAPI/SingleFoodContext'
 import { useRouter } from 'next/navigation'
+import FoodCart from './FoodCart'
 const FoodList = () => {
 
     const router = useRouter()
-    const imagePath = process.env.NEXT_PUBLIC_IMAGE
     const scrollRef = useRef(null);
     const itemWidth = 150;
     const [category, setCategory] = useState(null)
     const { successFoodList, errorFood, getAllFood } = useGetAllFood()
 
-    const { foodDescription, setFoodDescription } = useContext(singleFood)
-    console.log(foodDescription, "foodDescription")
     const scrollNext = () => {
         if (scrollRef.current) {
             scrollRef.current.scrollLeft += itemWidth;
@@ -86,34 +83,14 @@ const FoodList = () => {
                 </div>
 
             </div>
+
             <h1 className='text-xl md:text-2xl font-liber font-semibold font-bulk-white mb-6'>{category ? `${category} Items` : "Our Favorite Dishes"}</h1>
             {
                 successFoodList?.length > 0 ?
 
                     <div className='grid my-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 h-fit w-full' id="foodlist">
                         {successFoodList?.map((food, index) => (
-                            <div className='flex py-2 flex-col gap-2 border-bulk-white border-2 shadow-md rounded-md px-4' key={index} onClick={() => { router.push(`/cart?foodId=${food._id}`), setFoodDescription(food) }}>
-
-                                <div className='h-[250px] w-[100%] overflow-hidden'>
-                                    <Image
-                                        src={`${imagePath}/${food?.image}`}
-                                        height={200}
-                                        width={200}
-                                        alt="food image"
-                                        className="h-full w-[100%] border rounded-md transition-all transform duration-300 ease-in hover:scale-105"
-                                    />
-                                </div>
-
-                                <section>
-                                    <h1 className='text-[18px] font-dm_sans font-medium'>{food.name}</h1>
-                                </section>
-                                <h1 className='text-[12px] text-gray-700 font-dm_sans'>{`${food.description.split(" ").slice(0, 10).join(" ")}...`}</h1>
-                                <section className='flex gap-12 items-center'>
-                                    <h1 className='text-[18px] font-semibold text-gray-800 font-dm_sans'>Rs {food.prize}</h1>
-                                    <h2 className='text-[12px] font-dm_sans text-gray-700'>Discount by 2%</h2>
-                                </section>
-                                <button className='w-full bg-blue-700 text-white py-2 rounded-md text-center font-medium hover:bg-blue-600'>Add To Cart</button>
-                            </div>
+                            <FoodCart food={food} index={index} />
                         ))}
 
                     </div>

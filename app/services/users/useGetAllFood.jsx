@@ -16,7 +16,6 @@ const useGetAllFood = () => {
                 baseUrl.searchParams.append("category", category)
             }
 
-
             const request = await fetch(baseUrl.toString(), {
                 method: "GET",
                 headers: {
