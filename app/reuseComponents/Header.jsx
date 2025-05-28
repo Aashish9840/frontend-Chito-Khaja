@@ -3,14 +3,16 @@ import { Search } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import useSearchFood from '../services/users/useSearchFood'
 import { useRouter } from 'next/navigation'
-
+import * as Dialog from "@radix-ui/react-dialog"
+import { AuthForm } from '../ContextAPI/AuthFormContext'
 const Header = () => {
     const path = usePathname()
     const router = useRouter()
     const [search, setSearch] = useState(null)
+    const { showSignUp, setShowSignUp, showLogIn, setShowLogIn } = useContext(AuthForm)
 
     const { searchFood, errorSearchFood, getSearchFood } = useSearchFood()
 
@@ -23,7 +25,6 @@ const Header = () => {
             }, 500)
             return () => clearTimeout(timer)
         }
-
     }, [search])
 
 
@@ -73,7 +74,126 @@ const Header = () => {
                         </div>
                     }
                 </div><Link href="/order" className={`cursor-pointer ${path === "/cart" ? "text-blue-700" : "text-gray-800"} `}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#797070" d="M17 18a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2M1 2h3.27l.94 2H20a1 1 0 0 1 1 1c0 .17-.05.34-.12.5l-3.58 6.47c-.34.61-1 1.03-1.75 1.03H8.1l-.9 1.63l-.03.12a.25.25 0 0 0 .25.25H19v2H7a2 2 0 0 1-2-2c0-.35.09-.68.24-.96l1.36-2.45L3 4H1zm6 16a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2m9-7l2.78-5H6.14l2.36 5z" /></svg></Link>
-                <h1 className={`text-[16px] font-medium font-dm_sans hover:text-blue-700 cursor-pointer ${path === "/" ? "text-blue-700" : ""}`}>Signup</h1>
+                <h1 className={`text-[16px] font-medium font-dm_sans hover:text-blue-700 cursor-pointer ${path === "/" ? "text-blue-700" : ""}`} onClick={() => setShowSignUp(!showSignUp)}>Signup</h1>
+                {
+                    showSignUp && <Dialog.Root onOpenChange={setShowSignUp} open={showSignUp}>
+                        <Dialog.Trigger asChild>
+                            <button className="inline-flex h-[35px] items-center justify-center rounded bg-violet4 px-[15px] font-medium leading-none text-violet11 outline-none outline-offset-1 hover:bg-mauve3 focus-visible:outline-2 focus-visible:outline-violet6 select-none">
+                                {/* Edit profile */}
+                            </button>
+                        </Dialog.Trigger>
+                        <Dialog.Portal>
+                            <Dialog.Overlay className="fixed inset-0 bg-black/20 data-[state=open]:animate-overlayShow" />
+                            <Dialog.Content className="fixed bg-[#FFFF] left-1/2 top-1/2 max-h-[85vh] z-[20] shadow-md w-[90vw] max-w-[350px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-gray1   focus:outline-none data-[state=open]:animate-contentShow">
+                                <Dialog.Title >
+                                </Dialog.Title>
+
+
+                                <form className="flex flex-col space-y-4 p-4">
+                                    <h2 className="text-xl font-semibold text-center mb-4">Sign Up</h2>
+
+                                    <input
+                                        type="text"
+                                        placeholder="Username"
+                                        className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
+
+                                    />
+
+                                    <input
+                                        type="email"
+                                        placeholder="Email"
+                                        className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
+
+                                    />
+
+                                    <input
+                                        type="password"
+                                        placeholder="Password"
+                                        className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
+
+                                    />
+
+                                    <button
+                                        type="submit"
+                                        className="bg-blue-600 text-white py-2 mt-10 rounded-lg hover:bg-blue-500 text-sm"
+
+                                    >
+                                        Sign Up
+                                    </button>
+                                    <p className="text-center text-sm text-gray-500 mt-2">
+                                        Already have an account?{' '}
+                                        <span
+                                            className="text-blue-600 cursor-pointer hover:underline"
+                                            onClick={() => { setShowLogIn(!showLogIn), setShowSignUp(false) }}
+                                        >
+                                            Sign  in
+                                        </span>
+                                    </p>
+                                </form>
+
+
+
+                            </Dialog.Content>
+                        </Dialog.Portal>
+                    </Dialog.Root>
+                }
+
+
+                {
+                    showLogIn && <Dialog.Root onOpenChange={setShowLogIn} open={showLogIn}>
+                        <Dialog.Trigger asChild>
+                            <button className="inline-flex h-[35px] items-center justify-center rounded bg-violet4 px-[15px] font-medium leading-none text-violet11 outline-none outline-offset-1 hover:bg-mauve3 focus-visible:outline-2 focus-visible:outline-violet6 select-none">
+                                {/* Edit profile */}
+                            </button>
+                        </Dialog.Trigger>
+                        <Dialog.Portal>
+                            <Dialog.Overlay className="fixed inset-0 bg-black/20 data-[state=open]:animate-overlayShow" />
+                            <Dialog.Content className="fixed bg-[#FFFF] left-1/2 top-1/2 max-h-[85vh] z-[20] shadow-md w-[90vw] max-w-[350px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-gray1   focus:outline-none data-[state=open]:animate-contentShow">
+                                <Dialog.Title >
+                                </Dialog.Title>
+
+
+                                <form className="flex flex-col space-y-4 p-4">
+                                    <h2 className="text-xl font-semibold text-center mb-4">Sign In</h2>
+
+                                    <input
+                                        type="email"
+                                        placeholder="Email"
+                                        className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
+
+                                    />
+
+                                    <input
+                                        type="password"
+                                        placeholder="Password"
+                                        className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
+
+                                    />
+
+                                    <button
+                                        type="submit"
+                                        className="bg-blue-600 text-white py-2 mt-10 rounded-lg hover:bg-blue-500 text-sm"
+
+                                    >
+                                        Log In
+                                    </button>
+                                    <p className="text-center text-sm text-gray-500 mt-2">
+                                        Don't have an account?{' '}
+                                        <span
+                                            className="text-blue-600 cursor-pointer hover:underline"
+                                            onClick={() => { setShowSignUp(!showSignUp), setShowLogIn(false) }}
+                                        >
+                                            Sign Up
+                                        </span>
+                                    </p>
+                                </form>
+
+
+
+                            </Dialog.Content>
+                        </Dialog.Portal>
+                    </Dialog.Root>
+                }
 
             </section>
 
