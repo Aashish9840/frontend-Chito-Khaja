@@ -5,7 +5,7 @@ import React from 'react'
 const Footer = () => {
     return (
         <div className=' p-0 mt-10 md:p-6 container'>
-            <section className='flex justify-between gap-2 items-center border-b-2 border-b-gray-400 pb-10'>
+            <section className='flex justify-between gap-10 items-center border-b-2 border-b-gray-400 pb-10'>
                 <div className='flex items-center'>
                     <Image
                         src="/admin/food_logo.jpg"

@@ -11,6 +11,9 @@ const FoodList = () => {
     const scrollRef = useRef(null);
     const itemWidth = 150;
     const [category, setCategory] = useState(null)
+
+    const [foodDetails, setFoodDetails] = useState([])
+
     const { successFoodList, errorFood, getAllFood } = useGetAllFood()
 
     const scrollNext = () => {
@@ -90,7 +93,7 @@ const FoodList = () => {
 
                     <div className='grid my-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 h-fit w-full' id="foodlist">
                         {successFoodList?.map((food, index) => (
-                            <FoodCart food={food} index={index} />
+                            <FoodCart food={food} key={index} />
                         ))}
 
                     </div>
@@ -112,5 +115,4 @@ const FoodList = () => {
         </div>
     )
 }
-
 export default FoodList
