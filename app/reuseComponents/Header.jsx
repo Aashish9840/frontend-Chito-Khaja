@@ -5,16 +5,30 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useContext, useEffect, useState } from 'react'
 import useSearchFood from '../services/users/useSearchFood'
+import useUserSignUp from '../services/users/useUserSignUp'
+import useUserSignIn from '../services/users/useUserSignIn'
 import { useRouter } from 'next/navigation'
 import * as Dialog from "@radix-ui/react-dialog"
 import { AuthForm } from '../ContextAPI/AuthFormContext'
+import { useForm } from 'react-hook-form'
+import { errorToast, successToast } from './ReactToast'
 const Header = () => {
     const path = usePathname()
     const router = useRouter()
     const [search, setSearch] = useState(null)
     const { showSignUp, setShowSignUp, showLogIn, setShowLogIn } = useContext(AuthForm)
 
+    const { register: registerSignUp, handleSubmit: handleSignUp, formState: { errors: errorsSingUp }, reset: resetSignUp
+    } = useForm()
+
+    const { register: registerSignIn, handleSubmit: handleSignIn, formState: { errors: errorsSingIn }, reset: resetSignIn
+    } = useForm()
+
     const { searchFood, errorSearchFood, getSearchFood } = useSearchFood()
+    const { successSignUp, errorSignUp, getSignUp } = useUserSignUp()
+
+    const { successSignIn, errorSignIn, getSignIn } = useUserSignIn()
+
 
     useEffect(() => {
 
@@ -27,6 +41,34 @@ const Header = () => {
         }
     }, [search])
 
+    const userSignUp = (data) => {
+        getSignUp(data)
+    }
+
+    useEffect(() => {
+        if (successSignUp) {
+            successToast(successSignUp)
+            resetSignUp()
+        }
+        if (errorSignUp) {
+            errorToast(errorSignUp)
+        }
+    }, [successSignUp, errorSignUp])
+
+
+    const userSignIn = (data) => {
+        getSignIn(data)
+    }
+
+    useEffect(() => {
+        if (successSignIn) {
+            successToast(successSignIn)
+            resetSignIn()
+        }
+        if (errorSignIn) {
+            errorToast(errorSignIn)
+        }
+    }, [successSignIn, errorSignIn])
 
     return (
         <div className=' container pt-3 pb-1 border-b-2 border-b-gray-200 flex justify-between items-center'>
@@ -89,34 +131,53 @@ const Header = () => {
                                 </Dialog.Title>
 
 
-                                <form className="flex flex-col space-y-4 p-4">
+                                <form className="flex flex-col space-y-4 p-4" onSubmit={handleSignUp(userSignUp)}>
                                     <h2 className="text-xl font-semibold text-center mb-4">Sign Up</h2>
+                                    <div className='relative'>
+                                        <input
+                                            type="text"
+                                            placeholder="Username"
+                                            className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
+                                            {...registerSignUp("userName", { required: "User Name is required field" })}
 
-                                    <input
-                                        type="text"
-                                        placeholder="Username"
-                                        className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
 
-                                    />
+                                        />
+                                        {errorsSingUp.userName && <p className='absolute top-full text-[10px] text-red-500'>{errorsSingUp.userName.message}</p>}
+                                    </div>
 
-                                    <input
-                                        type="email"
-                                        placeholder="Email"
-                                        className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
 
-                                    />
+                                    <div className='relative'>
+                                        <input
+                                            type="email"
+                                            placeholder="Email"
+                                            className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
+                                            {...registerSignUp("email", {
+                                                required: "User email is required", pattern: {
+                                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                                    message: "Valid email is required"
+                                                }
+                                            })}
+                                        />
+                                        {errorsSingUp.email && <p className='absolute top-full text-[10px] text-red-500'>{errorsSingUp.email.message}</p>}
+                                    </div>
 
-                                    <input
-                                        type="password"
-                                        placeholder="Password"
-                                        className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
-
-                                    />
-
+                                    <div className='relative'>
+                                        <input
+                                            type="password"
+                                            placeholder="Password"
+                                            className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
+                                            {...registerSignUp("password", {
+                                                required: "password is required", minLength: {
+                                                    value: 8,
+                                                    message: "Minimum 8 characters password is required"
+                                                }
+                                            })}
+                                        />
+                                        {errorsSingUp.password && <p className='absolute top-full text-[10px] text-red-500'>{errorsSingUp.password.message}</p>}
+                                    </div>
                                     <button
                                         type="submit"
                                         className="bg-blue-600 text-white py-2 mt-10 rounded-lg hover:bg-blue-500 text-sm"
-
                                     >
                                         Sign Up
                                     </button>
@@ -130,9 +191,6 @@ const Header = () => {
                                         </span>
                                     </p>
                                 </form>
-
-
-
                             </Dialog.Content>
                         </Dialog.Portal>
                     </Dialog.Root>
@@ -153,22 +211,38 @@ const Header = () => {
                                 </Dialog.Title>
 
 
-                                <form className="flex flex-col space-y-4 p-4">
+                                <form className="flex flex-col space-y-4 p-4" onSubmit={handleSignIn(userSignIn)}>
                                     <h2 className="text-xl font-semibold text-center mb-4">Sign In</h2>
+                                    <div className='relative'>
+                                        <input
+                                            type="text"
+                                            placeholder="Email"
+                                            className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
+                                            {...registerSignIn("email", {
+                                                required: "User email is required", pattern: {
+                                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                                    message: "Invalid Email"
+                                                }
+                                            })}
 
-                                    <input
-                                        type="email"
-                                        placeholder="Email"
-                                        className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
+                                        />
+                                        {errorsSingIn.email && <p className='absolute top-full text-[10px] text-red-500'>{errorsSingIn.email.message}</p>}
+                                    </div>
+                                    <div className='relative'>
+                                        <input
+                                            type="password"
+                                            placeholder="Password"
+                                            className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
+                                            {...registerSignIn("password", {
+                                                required: "Password is required", minLength: {
+                                                    value: 8,
+                                                    message: "Strong password with more that 8 characters is requried"
+                                                }
+                                            })}
+                                        />
+                                        {errorsSingIn.password && <p className='absolute top-full text-[10px] text-red-500'>{errorsSingIn.password.message}</p>}
+                                    </div>
 
-                                    />
-
-                                    <input
-                                        type="password"
-                                        placeholder="Password"
-                                        className="border border-gray-300 rounded-lg px-4 py-2 w-full text-sm outline-none"
-
-                                    />
 
                                     <button
                                         type="submit"

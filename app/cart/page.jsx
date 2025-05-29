@@ -14,6 +14,11 @@ const page = () => {
     const params = useSearchParams()
     const router = useRouter()
     const foodId = params.get("foodId")
+    useEffect(() => {
+        if (!foodId) {
+            router.push('/')
+        }
+    }, [foodId])
     const imagePath = process.env.NEXT_PUBLIC_IMAGE
     const { singleFood, errorSingleFood, getSingleFood } = useGetSingleFood()
     const { successFoodList, errorFood, getAllFood } = useGetAllFood()
