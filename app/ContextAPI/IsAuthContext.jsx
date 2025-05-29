@@ -10,7 +10,7 @@ const IsAuthContext = ({ children }) => {
     useEffect(() => {
         async function checkAuth() {
             try {
-                setLoading(false)
+                setLoading(true)
                 setAuthUser(null)
                 const res = await fetch('/api/admin/isAuth', {
                     method: 'GET',

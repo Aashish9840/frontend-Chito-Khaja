@@ -3,7 +3,7 @@ import { useEffect, useContext, useState } from "react";
 import { userContext } from "../ContextAPI/IsAuthContext";
 import { usePathname, useRouter } from "next/navigation";
 
-const ProtectedRoute = ({ children }) => {
+const userProtectedRoute = ({ children }) => {
     const router = useRouter()
     const { authUser, loading } = useContext(userContext);
     const path = usePathname()
@@ -24,14 +24,16 @@ const ProtectedRoute = ({ children }) => {
             else {
                 router.push(path)
             }
+
+
         }
     }, [authUser, loading]);
 
     if (loading || !ready) {
-        return <div className="flex justify-center items-center h-screen w-screen">Loading...</div>
+        <div className="flex justify-center items-center h-screen w-screen">Loading...</div>
     }
 
     return children
 };
 
-export default ProtectedRoute;
+export default userProtectedRoute;

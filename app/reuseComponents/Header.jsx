@@ -228,7 +228,6 @@ const Header = () => {
                                         />
                                         {errorsSingIn.email && <p className='absolute top-full text-[10px] text-red-500'>{errorsSingIn.email.message}</p>}
                                     </div>
-
                                     <div className='relative'>
                                         <input
                                             type="password"
