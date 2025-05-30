@@ -87,7 +87,7 @@ const FoodList = () => {
 
             </div>
 
-            <h1 className='text-xl md:text-2xl font-liber font-semibold font-bulk-white mb-6'>{category ? `${category} Items` : "Our Favorite Dishes"}</h1>
+            <h1 id="foodlist" className='text-xl md:text-2xl font-liber font-semibold font-bulk-white mb-6'>{category ? `${category} Items` : "Our Favorite Dishes"}</h1>
             {
                 successFoodList?.length > 0 ?
 

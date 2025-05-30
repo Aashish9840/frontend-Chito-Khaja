@@ -12,11 +12,14 @@ import * as Dialog from "@radix-ui/react-dialog"
 import { AuthForm } from '../ContextAPI/AuthFormContext'
 import { useForm } from 'react-hook-form'
 import { errorToast, successToast } from './ReactToast'
+import IsUserAuthContext from '../ContextAPI/IsUserAuthContext'
 const Header = () => {
     const path = usePathname()
     const router = useRouter()
     const [search, setSearch] = useState(null)
     const { showSignUp, setShowSignUp, showLogIn, setShowLogIn } = useContext(AuthForm)
+    const { setCallUserValidate } = useContext(IsUserAuthContext)
+
 
     const { register: registerSignUp, handleSubmit: handleSignUp, formState: { errors: errorsSingUp }, reset: resetSignUp
     } = useForm()
@@ -28,7 +31,6 @@ const Header = () => {
     const { successSignUp, errorSignUp, getSignUp } = useUserSignUp()
 
     const { successSignIn, errorSignIn, getSignIn } = useUserSignIn()
-
 
     useEffect(() => {
 
@@ -64,6 +66,7 @@ const Header = () => {
         if (successSignIn) {
             successToast(successSignIn)
             resetSignIn()
+            setCallUserValidate((prev) => !prev)
         }
         if (errorSignIn) {
             errorToast(errorSignIn)
