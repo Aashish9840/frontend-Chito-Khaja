@@ -10,7 +10,7 @@ const useGetSingleFood = () => {
 
             const request = await fetch("/api/food/single", {
                 method: "POST",
-                headers: {
+                headers: {  
                     'Content-Type': "application/json"
                 },
                 body: JSON.stringify({ foodId })
