@@ -12,7 +12,7 @@ const UserProtectedRoute = ({ children }) => {
 
     console.log(validateUser, "authUser")
     useEffect(() => {
-        if (loading) return;
+        if (loadingUser) return;
 
 
         if (!validateUser && (path.startsWith("/cart") || path === '/order')) {
@@ -24,7 +24,7 @@ const UserProtectedRoute = ({ children }) => {
         }
     }, [loadingUser, validateUser]);
 
-    if (loading) {
+    if (loadingUser) {
         <div className="flex justify-center items-center h-screen w-screen">Loading...</div>
     }
 
