@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image'
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
 const Hero = () => {
@@ -61,7 +62,7 @@ const Hero = () => {
                 <div className='text-[#f1f1f1] my-2 hidden sm:block'>
                     🚀 Fast Delivery | 🍔 Great Taste | 📱 Easy to Order
                 </div>
-                <button className='py-2 px-8 bg-blue-700 hover:bg-blue-600 text-white mt-2 rounded-md'>Expore Food</button>
+                <Link href="#foodlist" className='py-2 px-8 bg-blue-700 hover:bg-blue-600 text-white mt-2 rounded-md'>Expore Food</Link>
             </div>
             {/* overlay */}
             <div className='absolute inset-0 bg-black/15'>
