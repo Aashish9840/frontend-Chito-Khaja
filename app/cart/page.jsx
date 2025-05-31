@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../reuseComponents/Header'
 import { singleFood } from '../ContextAPI/SingleFoodContext'
 import Image from 'next/image'
@@ -9,19 +9,29 @@ import { Minus, Plus } from 'lucide-react'
 import useGetAllFood from '../services/users/useGetAllFood'
 import FoodCart from '../components/FoodCart'
 import Footer from '../components/Footer'
+import useAddToCart from '../services/users/useAddToCart'
+import { errorToast, successToast } from '../reuseComponents/ReactToast'
+import { userValidate } from '../ContextAPI/IsUserAuthContext'
+import { AuthForm } from '../ContextAPI/AuthFormContext'
 
 const page = () => {
     const params = useSearchParams()
     const router = useRouter()
     const foodId = params.get("foodId")
+    const [quantity, setQuantity] = useState(1)
+    const { validateUser } = useContext(userValidate);
+    const { setShowLogIn } = useContext(AuthForm)
     useEffect(() => {
         if (!foodId) {
             router.push('/')
         }
     }, [foodId])
     const imagePath = process.env.NEXT_PUBLIC_IMAGE
+
+    const { setCallUserValidate } = useContext(userValidate)
     const { singleFood, errorSingleFood, getSingleFood } = useGetSingleFood()
     const { successFoodList, errorFood, getAllFood } = useGetAllFood()
+    const { successCart, errorCart, getCart } = useAddToCart()
 
     useEffect(() => {
         if (foodId) {
@@ -34,6 +44,29 @@ const page = () => {
             getAllFood(singleFood.category)
         }
     }, [singleFood])
+
+
+    const handleCart = (foodId, prize, name, image) => {
+
+        if (!validateUser) {
+
+            return setShowLogIn(true)
+        }
+
+        getCart(foodId, quantity, prize, name, image)
+    }
+
+    useEffect(() => {
+        if (successCart) {
+            successToast(successCart)
+            router.push('/order')
+            setQuantity(0)
+            setCallUserValidate(prev => !prev)
+        }
+        if (errorCart) {
+            errorToast(errorCart)
+        }
+    }, [successCart, errorCart])
     return (
         <div className='container px-4 sm:px-0'>
             <Header />
@@ -63,16 +96,23 @@ const page = () => {
                     <section>
                         <h1 className='text-[16px] font-dm_sans'>Quantity</h1>
                         <div className='flex gap-4 my-2 items-center w-[150px] h-fit py-2 px-2 justify-around border border-gray-400 rounded-sm'>
-                            <Minus size={20} className='cursor-pointer' />
-                            <h1>01</h1>
-                            <Plus size={20} className='cursor-pointer' />
+                            <Minus size={20} className={`${quantity < 2 ? "cursor-not-allowed" : "cursor-pointer"}`} onClick={() => {
+                                if (quantity > 1) {
+                                    setQuantity(prev => prev - 1)
+
+                                }
+
+                            }} />
+                            <h1 className='text-sm font-medium font-dm_sans bg-none'>{quantity}</h1>
+                            <Plus size={20} className='cursor-pointer' onClick={() => setQuantity(prev => prev + 1)} />
                         </div>
                     </section>
                     <section className='flex gap-1 flex-col'>
                         <h1 className='text-[16px] font-medium font-dm_sans'>Description</h1>
                         <h2 className='text-[16px] font-dm_sans'>{singleFood?.description}</h2>
                     </section>
-                    <button className='py-3 bg-black/90 text-white text-base font-medium hover:bg-black/80 rounded-lg w-full font-dm_sans' onClick={() => router.push('/order')}>Add to Cart</button>
+                    <button className='py-3 bg-black/90 text-white text-base font-medium hover:bg-black/80 rounded-lg w-full font-dm_sans' 
+                    onClick={() => handleCart(singleFood._id, singleFood.prize, singleFood.name, singleFood.image)}>Add to Cart</button>
                 </div>
 
             </section>

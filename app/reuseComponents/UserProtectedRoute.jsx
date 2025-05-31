@@ -10,17 +10,13 @@ const UserProtectedRoute = ({ children }) => {
     const { setShowLogIn } = useContext(AuthForm)
     const path = usePathname()
 
-    console.log(validateUser, "authUser")
     useEffect(() => {
         if (loadingUser) return;
 
 
-        if (!validateUser && (path.startsWith("/cart") || path === '/order')) {
+        if (!validateUser && path === '/order') {
             router.push('/')
             setShowLogIn(true)
-        } else {
-            router.push(path)
-
         }
     }, [loadingUser, validateUser]);
 
