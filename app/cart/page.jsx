@@ -59,7 +59,6 @@ const page = () => {
     useEffect(() => {
         if (successCart) {
             successToast(successCart)
-            router.push('/order')
             setQuantity(0)
             setCallUserValidate(prev => !prev)
         }
@@ -111,8 +110,8 @@ const page = () => {
                         <h1 className='text-[16px] font-medium font-dm_sans'>Description</h1>
                         <h2 className='text-[16px] font-dm_sans'>{singleFood?.description}</h2>
                     </section>
-                    <button className='py-3 bg-black/90 text-white text-base font-medium hover:bg-black/80 rounded-lg w-full font-dm_sans' 
-                    onClick={() => handleCart(singleFood._id, singleFood.prize, singleFood.name, singleFood.image)}>Add to Cart</button>
+                    <button className='py-3 bg-black/90 text-white text-base font-medium hover:bg-black/80 rounded-lg w-full font-dm_sans'
+                        onClick={() => handleCart(singleFood._id, singleFood.prize, singleFood.name, singleFood.image)}>Add to Cart</button>
                 </div>
 
             </section>
