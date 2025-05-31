@@ -43,7 +43,7 @@ const page = () => {
 
                 mutatedCart(updatedCart)
 
-            }, 5000)
+            }, 3000)
             return () => clearTimeout(time)
         }
 
