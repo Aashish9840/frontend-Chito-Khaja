@@ -6,6 +6,8 @@ import Image from 'next/image'
 import { Mail, X } from 'lucide-react'
 import useUpdatedCart from '../services/users/useUpdatedCart'
 import { useForm } from 'react-hook-form'
+import usePlaceOrder from '../services/users/usePlaceOrder'
+import { errorToast, successToast } from '../reuseComponents/ReactToast'
 
 const page = () => {
     const imagePath = process.env.NEXT_PUBLIC_IMAGE
@@ -13,12 +15,15 @@ const page = () => {
     const [updatedCart, setUpdatedCart] = useState(null)
     const [subTotal, setSubTotal] = useState(0)
     const [showOrder, setShowOrder] = useState({
-        confirmOrder: false,
-        CheckOut: true
+        confirmOrder: true,
+        CheckOut: false,
+        UpdateCart: false,
     })
     const { register, formState: { errors }, handleSubmit, reset } = useForm()
     const { validateUser, setCallUserValidate } = useContext(userValidate)
     const { successUpdate, errorUpdate, mutatedCart } = useUpdatedCart()
+
+    const { successCart, errorCart, placeOrder } = usePlaceOrder()
     useEffect(() => {
         if (validateUser?.cardData) {
             const arry = []
@@ -60,9 +65,9 @@ const page = () => {
         if (successUpdate) {
             setCallUserValidate(prev => !prev)
             setUpdatedCart(null)
+            setShowOrder(prev => ({ ...prev, UpdateCart: !prev.UpdateCart }))
         }
     }, [successUpdate])
-
     // subtotal calculation
     useEffect(() => {
         if (product) {
@@ -75,15 +80,25 @@ const page = () => {
         }
 
     }, [product])
-
+    // placeOrder
     const orderForm = (data) => {
-        console.log(data)
+        placeOrder(data)
     }
+    // success and error place order
+    useEffect(() => {
+        if (successCart) {
+            successToast(successCart)
+            reset()
+        }
+        if (errorCart) {
+            errorToast(errorCart)
+        }
+    }, [successCart, errorCart])
     return (
         <div className='container px-4 sm:px-0'>
             <Header />
             <section className='my-4'>
-                <div className='grid grid-cols-2 w-full h-fit'>
+                {/* <div className='grid grid-cols-2 w-full h-fit'>
                     <h1 className={`${showOrder.confirmOrder ? "border-b-2 border-b-blue-700 bg-gray-100" : ""} text-center py-2 font-dm_sans font-medium`}
                         onClick={() => setShowOrder(prev => ({ ...prev, confirmOrder: true, CheckOut: false }))}
                     >Confirm Order</h1>
@@ -92,7 +107,7 @@ const page = () => {
                     >CheckOut</h1>
 
 
-                </div>
+                </div> */}
 
                 {showOrder.confirmOrder && <main className='py-4'>
                     <div className='w-full h-[40vh] overflow-y-auto custom-scroll'>
@@ -234,10 +249,6 @@ const page = () => {
 
                                 </div>
                             </section>
-
-
-
-
                             <div className='relative'>
                                 <label className="block text-sm font-medium mb-1">City</label>
                                 <input
