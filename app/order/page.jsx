@@ -8,6 +8,7 @@ import useUpdatedCart from '../services/users/useUpdatedCart'
 import { useForm } from 'react-hook-form'
 import usePlaceOrder from '../services/users/usePlaceOrder'
 import { errorToast, successToast } from '../reuseComponents/ReactToast'
+import Footer from '../components/Footer'
 
 const page = () => {
     const imagePath = process.env.NEXT_PUBLIC_IMAGE
@@ -58,14 +59,18 @@ const page = () => {
             }, 3000)
             return () => clearTimeout(time)
         }
+        if (showOrder.UpdateCart) {
+            const cart = []
+            mutatedCart(cart)
+        }
 
-    }, [updatedCart]);
+    }, [updatedCart, showOrder.UpdateCart]);
     // recalling the validateuser for user update
     useEffect(() => {
         if (successUpdate) {
             setCallUserValidate(prev => !prev)
             setUpdatedCart(null)
-            setShowOrder(prev => ({ ...prev, UpdateCart: !prev.UpdateCart }))
+            setShowOrder(prev => ({ ...prev, UpdateCart: false }))
         }
     }, [successUpdate])
     // subtotal calculation
@@ -82,18 +87,22 @@ const page = () => {
     }, [product])
     // placeOrder
     const orderForm = (data) => {
-        placeOrder(data)
+        const newData = { ...data, foodItems: product }
+        placeOrder(newData)
     }
     // success and error place order
     useEffect(() => {
         if (successCart) {
             successToast(successCart)
+            setShowOrder(prev => ({ ...prev, UpdateCart: true }))
             reset()
         }
         if (errorCart) {
             errorToast(errorCart)
         }
     }, [successCart, errorCart])
+
+
     return (
         <div className='container px-4 sm:px-0'>
             <Header />
@@ -183,7 +192,15 @@ const page = () => {
                             <span>Rs. {subTotal + 100}</span>
                         </div>
 
-                        <button onClick={() => setShowOrder(prev => ({ ...prev, confirmOrder: false, CheckOut: true }))} className="mt-6 px-4 py-2 bg-pink-500 text-white font-semibold rounded hover:bg-pink-600 transition">
+                        <button onClick={() => {
+                            if (product.length > 0) {
+                                setShowOrder(prev => ({ ...prev, confirmOrder: false, CheckOut: true }))
+                            }
+                            else (
+                                errorToast("Add atleast one product to cart bedore checkout")
+                            )
+                        }
+                        } className="mt-6 px-4 py-2 bg-blue-700 text-white font-semibold rounded hover:bg-blue-600 transition">
                             Check Out
                         </button>
                     </div>
@@ -192,8 +209,8 @@ const page = () => {
                 </main>
                 }
                 {
-                    showOrder.CheckOut && <section className='py-8'>
-                        <form onSubmit={handleSubmit(orderForm)} className="w-full sm:w-[50vw] lg:w-[40vw] space-y-5 font-sans">
+                    showOrder.CheckOut && <section className='flex flex-col items-start gap-8 md:gap-20 sm:flex-row w-full py-8'>
+                        <form onSubmit={handleSubmit(orderForm)} className="w-full sm:w-[60vw] lg:w-[40vw] space-y-5 font-sans">
                             <div className="flex space-x-4">
                                 <div className=" relative w-1/2">
                                     <label className="block text-sm font-medium mb-1">First name</label>
@@ -249,18 +266,30 @@ const page = () => {
 
                                 </div>
                             </section>
-                            <div className='relative'>
-                                <label className="block text-sm font-medium mb-1">City</label>
-                                <input
-                                    type="text"
-                                    className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
-                                    placeholder="City"
-                                    {...register("city", { required: "City is required" })}
-                                />
-                                {errors.city && <p className='absolute top-full text-[12px] font-medium font-dm_sans text-red-500'>{errors.city.message}</p>}
 
-                            </div>
+                            <section className="flex space-x-4 w-full">
+                                <div className='relative w-1/2'>
+                                    <label className="block text-sm font-medium mb-1">City</label>
+                                    <input
+                                        type="text"
+                                        className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                                        placeholder="City"
+                                        {...register("city", { required: "City is required" })}
+                                    />
+                                    {errors.city && <p className='absolute top-full text-[12px] font-medium font-dm_sans text-red-500'>{errors.city.message}</p>}
 
+                                </div>
+                                <div className='relative w-1/2'>
+                                    <label className="block text-sm font-medium mb-1">Contact Number</label>
+                                    <input
+                                        type="text"
+                                        className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                                        placeholder="Contact Info"
+                                        {...register("contact", { required: "City is required" })}
+                                    />
+                                    {errors.contact && <p className='absolute top-full text-[12px] font-medium font-dm_sans text-red-500'>{errors.contact.message}</p>}
+                                </div>
+                            </section>
                             <div className='relative'>
                                 <label className="block text-sm font-medium mb-1">Country</label>
                                 <input
@@ -277,9 +306,35 @@ const page = () => {
                                 Order
                             </button>
                         </form>
+                        <div className='border border-gray-300 shadow-md z-10 p-4 w-full md:w-[400px]'>
+                            <h1 className='text-base font-dm_sans font-medium text-center'>Payment Details</h1>
+                            <section className='py-4 flex flex-col gap-2'>
+                                <div className=' grid grid-cols-2 gap-20 lg:gap-40'>
+
+                                    <h1 className='text-[14px] font-dm_sans font-medium'>Payement Type</h1>
+                                    <h1 className='text-[14px] font-dm_sans font-medium'>e-sewa</h1>
+
+                                </div>
+                                <div className='grid grid-cols-2 gap-20 lg:gap-40'>
+
+                                    <h1 className='text-[14px] font-dm_sans font-medium'>Total Items</h1>
+                                    <h1 className='text-[14px] font-dm_sans font-medium'>{product.length}</h1>
+
+                                </div>
+                                <div className='grid grid-cols-2 gap-20 lg:gap-40 border-t-2 border-t-gray-200 pt-2'>
+
+                                    <h1 className='text-[14px] font-dm_sans font-medium'>Total Price</h1>
+                                    <h1 className='text-[14px] font-dm_sans font-medium'>Rs. {subTotal}</h1>
+
+                                </div>
+
+                            </section>
+
+                        </div>
                     </section>
                 }
             </section>
+            <Footer />
         </div>
     )
 }

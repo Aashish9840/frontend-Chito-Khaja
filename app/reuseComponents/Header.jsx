@@ -3,7 +3,7 @@ import { LogOut, Search } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import useSearchFood from '../services/users/useSearchFood'
 import useUserSignUp from '../services/users/useUserSignUp'
 import useUserSignIn from '../services/users/useUserSignIn'
@@ -18,10 +18,30 @@ import { userContext } from '../ContextAPI/IsAuthContext'
 const Header = () => {
     const path = usePathname()
     const router = useRouter()
+    const closeUserPopUP = useRef()
     const [search, setSearch] = useState(null)
     const [showForm, setShowForm] = useState({
         loginInfo: false,
+        mobileMenu: false,
     })
+    const viewMobileLink = [
+        {
+            title: "Home",
+            link: '/'
+        },
+        {
+            title: "Category",
+            link: "/category",
+        },
+        {
+            title: "Popular",
+            link: "/popular"
+        },
+        {
+            title: "Order",
+            link: "/order"
+        }
+    ]
     const { showSignUp, setShowSignUp, showLogIn, setShowLogIn } = useContext(AuthForm)
     const { validateUser, setCallUserValidate } = useContext(userValidate)
 
@@ -92,6 +112,17 @@ const Header = () => {
         }
     }, [successLogOut, errorLogOut])
 
+    // close the user details popup by outside clicking
+
+    useEffect(() => {
+        const removeUserDetails = (e) => {
+            if (!closeUserPopUP?.current?.contains(e.target)) {
+                setShowForm(prev => ({ ...prev, loginInfo: false, mobileMenu: false }))
+            }
+        }
+        document.addEventListener("mousedown", removeUserDetails)
+    }, [])
+
     return (
         <div className=' container pt-3 pb-1 border-b-2 border-b-gray-200 flex justify-between items-center'>
 
@@ -102,14 +133,12 @@ const Header = () => {
                     height={300}
                     alt='food logo'
                     className='h-[50px] w-[50px]'
+                    priority
 
                 />
                 <h1 className='text-[20px] lg:text-2xl font-bold font-dm_sans'>Chito Khaja</h1>
             </Link>
-            {/* menu */}
-            <section className='block pr-6 cursor-pointer md:hidden'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="#797070" d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z" /></svg>
-            </section>
+
 
             <section className='hidden md:flex gap-[30px] lg:gap-[60px] items-center'>
 
@@ -117,8 +146,6 @@ const Header = () => {
                 <Link href='/category' className={`text-[16px] font-medium font-dm_sans hover:text-blue-700 cursor-pointer ${path === "/category" ? "text-blue-700" : ""}`}>Category</Link>
                 <Link href='/popular' className={`text-[16px] font-medium font-dm_sans hover:text-blue-700 cursor-pointer ${path === "/popular" ? "text-blue-700" : ""}`}>Popular</Link>
                 <Link href='/popular-food' className={`text-[16px] font-medium font-dm_sans hover:text-blue-700 cursor-pointer ${path === "/popular-food" ? "text-blue-700" : ""}`}>Recent</Link>
-
-
             </section>
             <section className='hidden md:flex gap-[30px] lg:gap-[40px] items-center'>
                 <div className='relative'>
@@ -142,7 +169,7 @@ const Header = () => {
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="#797070" d="M17 18a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2M1 2h3.27l.94 2H20a1 1 0 0 1 1 1c0 .17-.05.34-.12.5l-3.58 6.47c-.34.61-1 1.03-1.75 1.03H8.1l-.9 1.63l-.03.12a.25.25 0 0 0 .25.25H19v2H7a2 2 0 0 1-2-2c0-.35.09-.68.24-.96l1.36-2.45L3 4H1zm6 16a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2c0-1.11.89-2 2-2m9-7l2.78-5H6.14l2.36 5z" /></svg>
                     {validateUser && validateUser?.cardData?.length >= 0 &&
 
-                        <div className='absolute bg-green-600 p-1 top-[-15] rounded-[50%] w-[20px] h-[20px] flex items-center justify-center left-4'>
+                        <div className='absolute bg-red-400 p-1 top-[-15] rounded-[50%] w-[20px] h-[20px] flex items-center justify-center left-4'>
 
 
                             <h1 className=' font-extrabold font-dm_sans text-sm text-white'>{validateUser.cardData.length}</h1>
@@ -152,7 +179,7 @@ const Header = () => {
                 <div className='relative'>
                     {
                         validateUser ?
-                            <div className='relative' onClick={() => setShowForm(prev => ({ ...prev, loginInfo: !prev.loginInfo }))}>
+                            <div ref={closeUserPopUP} className='relative' onClick={() => setShowForm(prev => ({ ...prev, loginInfo: !prev.loginInfo }))}>
                                 <div className=' flex justify-center items-center w-[40px] h-[40px] rounded-full p-2 border cursor-pointer bg-bulk-white font-semibold'>
                                     {validateUser?.userName.substring(0, 2).toUpperCase()}
                                 </div>
@@ -333,7 +360,69 @@ const Header = () => {
 
             </section>
 
-        </div>
+            {/* for mobile view */}
+            <main className='block md:hidden'>
+
+
+                <div className='flex items-center gap-6 '>
+                    {/* signup button for mobile */}
+                    <div className=''>
+                        {
+                            validateUser ?
+                                <div ref={closeUserPopUP} className='relative' onClick={() => setShowForm(prev => ({ ...prev, loginInfo: !prev.loginInfo }))}>
+                                    <div className=' flex justify-center items-center w-[40px] h-[40px] rounded-full p-2 border cursor-pointer bg-bulk-white font-semibold'>
+                                        {validateUser?.userName.substring(0, 2).toUpperCase()}
+                                    </div>
+                                    {showForm.loginInfo && <div className='absolute flex flex-col gap-3 top-full right-2 min-w-[150px] w-fit max-h-[250px] overflow-y-auto custom-scroll py-2 shadow-lg rounded-sm z-10 bg-white'>
+
+                                        <div className='mx-4 border-b-2 pb-1 border-b-gray-700'>
+                                            <h1 className='text-base font-dm_sans font-bold '>{validateUser?.userName}</h1>
+                                            <h1 className='text-[12px] font-dm_sans font-medium  text-gray-700'>{validateUser?.email}</h1>
+                                        </div>
+                                        <section className='flex flex-col mt-2 px-4'>
+                                            <div onClick={() => router.push('/order')} className='flex gap-3 items-center py-[6px] px-1 cursor-pointer rounded-md hover:bg-bulk-white'>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="#7b6868" fillRule="evenodd" d="M10 2.25a1.75 1.75 0 0 0-1.582 1c-.684.006-1.216.037-1.692.223A3.25 3.25 0 0 0 5.3 4.563c-.367.493-.54 1.127-.776 1.998l-.047.17l-.513 2.964q-.277.191-.486.459c-.901 1.153-.472 2.87.386 6.301c.545 2.183.818 3.274 1.632 3.91C6.31 21 7.435 21 9.685 21h4.63c2.25 0 3.375 0 4.189-.635c.814-.636 1.086-1.727 1.632-3.91c.858-3.432 1.287-5.147.386-6.301a2.2 2.2 0 0 0-.487-.46l-.513-2.962l-.046-.17c-.237-.872-.41-1.506-.776-2a3.25 3.25 0 0 0-1.426-1.089c-.476-.186-1.009-.217-1.692-.222A1.75 1.75 0 0 0 14 2.25zm8.418 6.896l-.362-2.088c-.283-1.04-.386-1.367-.56-1.601a1.75 1.75 0 0 0-.768-.587c-.22-.086-.486-.111-1.148-.118A1.75 1.75 0 0 1 14 5.75h-4a1.75 1.75 0 0 1-1.58-.998c-.663.007-.928.032-1.148.118a1.75 1.75 0 0 0-.768.587c-.174.234-.277.56-.56 1.6l-.362 2.089C6.58 9 7.91 9 9.685 9h4.63c1.775 0 3.105 0 4.103.146M8 12.25a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4a.75.75 0 0 1 .75-.75m8.75.75a.75.75 0 0 0-1.5 0v4a.75.75 0 0 0 1.5 0zM12 12.25a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4a.75.75 0 0 1 .75-.75" clipRule="evenodd" /></svg>
+                                                <h1 className='text-sm font-dm_sans font-medium'>Order</h1>
+                                            </div>
+                                            <div className='flex gap-3 items-center py-[6px] px-1 cursor-pointer rounded-md hover:bg-bulk-white' onClick={() => signOut()}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#7b6868" d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h7v2H5v14h7v2zm11-4l-1.375-1.45l2.55-2.55H9v-2h8.175l-2.55-2.55L16 7l5 5z" /></svg>
+                                                <h1 className='text-sm font-dm_sans font-semibold'>Sign Out</h1>
+                                            </div>
+
+                                        </section>
+
+                                    </div>}
+                                </div>
+                                :
+                                <h1 className={`text-[16px] font-semibold font-dm_sans hover:text-blue-700 cursor-pointer ${path === "/" ? "text-blue-700" : ""}`} onClick={() => setShowLogIn(!showLogIn)}>LogIn</h1>
+                        }
+                    </div>
+                    {/* menu */}
+                    <section className='relative block pr-6 cursor-pointer md:hidden' onClick={() => setShowForm(prev => ({ ...prev, mobileMenu: !prev.mobileMenu }))}>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="#797070" d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z" /></svg>
+
+                    </section>
+
+
+                </div>
+
+                <div ref={closeUserPopUP} className={`fixed right-0 top-0 z-[100] w-[60vw] h-screen bg-white shadow-md transition-all duration-500 ease-in-out ${showForm.mobileMenu ? "opacity-100 translate-x-0" : " opacity-0 translate-x-full "}`}>
+                    <div className='flex flex-col gap-1 px-2 py-10'>
+                        {viewMobileLink.map((element, index) => (
+                            <div className='py-2 hover:bg-gray-100 px-2 rounded-md' key={index} onClick={() => setShowForm(prev => ({ ...prev, mobileMenu: !prev.mobileMenu }))}>
+                                <h1 onClick={() => router.push(element.link)}>{element.title}</h1>
+                            </div>
+
+                        ))}
+
+                    </div>
+                </div>
+
+            </main>
+
+
+        </div >
     )
 }
 

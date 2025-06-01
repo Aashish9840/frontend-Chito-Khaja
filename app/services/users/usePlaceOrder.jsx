@@ -4,16 +4,17 @@ import { useState } from "react";
 const usePlaceOrder = () => {
     const [successCart, setSuccessCart] = useState(null);
     const [errorCart, setErrorCart] = useState(null);
-    const placeOrder = async () => {
+    const placeOrder = async (form) => {
+        console.log(form, "product")
         try {
             setSuccessCart(null);
             setErrorCart(null);
-            const request = await fetch('/api/user/cartData', {
+            const request = await fetch('/api/order/placeOrder', {
                 method: "POST",
                 headers: {
                     'Content-Type': "application/json"
                 },
-                body: JSON.stringify({ foodId, quantity, prize, name, image }),
+                body: JSON.stringify(form),
                 credentials: 'include'
 
             });
