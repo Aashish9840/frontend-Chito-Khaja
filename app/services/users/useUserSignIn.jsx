@@ -23,7 +23,7 @@ const useUserSignIn = () => {
             if (request.ok) {
                 setSuccessSignIn(update.message);
             } else {
-                setErrorSignIn(list.message);
+                setErrorSignIn(update.message);
             }
         } catch (error) {
             setErrorSignIn(error.message);

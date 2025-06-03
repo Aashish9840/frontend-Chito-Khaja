@@ -179,11 +179,11 @@ const Header = () => {
                 <div className='relative'>
                     {
                         validateUser ?
-                            <div ref={closeUserPopUP} className='relative' onClick={() => setShowForm(prev => ({ ...prev, loginInfo: !prev.loginInfo }))}>
+                            <div className='relative' onClick={() => setShowForm(prev => ({ ...prev, loginInfo: !prev.loginInfo }))}>
                                 <div className=' flex justify-center items-center w-[40px] h-[40px] rounded-full p-2 border cursor-pointer bg-bulk-white font-semibold'>
                                     {validateUser?.userName.substring(0, 2).toUpperCase()}
                                 </div>
-                                {showForm.loginInfo && <div className='absolute flex flex-col gap-3 top-full right-2 min-w-[150px] w-fit max-h-[250px] overflow-y-auto custom-scroll py-2 shadow-lg rounded-sm z-10 bg-white'>
+                                {showForm.loginInfo && <div ref={closeUserPopUP} className='absolute flex flex-col gap-3 top-full right-2 min-w-[150px] w-fit max-h-[250px] overflow-y-auto custom-scroll py-2 shadow-lg rounded-sm z-[100] bg-white'>
 
                                     <div className='mx-4 border-b-2 pb-1 border-b-gray-700'>
                                         <h1 className='text-base font-dm_sans font-bold '>{validateUser?.userName}</h1>
@@ -233,7 +233,6 @@ const Header = () => {
                                         />
                                         {errorsSingUp.userName && <p className='absolute top-full text-[10px] text-red-500'>{errorsSingUp.userName.message}</p>}
                                     </div>
-
 
                                     <div className='relative'>
                                         <input
@@ -350,9 +349,6 @@ const Header = () => {
                                         </span>
                                     </p>
                                 </form>
-
-
-
                             </Dialog.Content>
                         </Dialog.Portal>
                     </Dialog.Root>
@@ -369,11 +365,11 @@ const Header = () => {
                     <div className=''>
                         {
                             validateUser ?
-                                <div ref={closeUserPopUP} className='relative' onClick={() => setShowForm(prev => ({ ...prev, loginInfo: !prev.loginInfo }))}>
+                                <div className='relative' onClick={() => setShowForm(prev => ({ ...prev, loginInfo: !prev.loginInfo }))}>
                                     <div className=' flex justify-center items-center w-[40px] h-[40px] rounded-full p-2 border cursor-pointer bg-bulk-white font-semibold'>
                                         {validateUser?.userName.substring(0, 2).toUpperCase()}
                                     </div>
-                                    {showForm.loginInfo && <div className='absolute flex flex-col gap-3 top-full right-2 min-w-[150px] w-fit max-h-[250px] overflow-y-auto custom-scroll py-2 shadow-lg rounded-sm z-10 bg-white'>
+                                    {showForm.loginInfo && <div ref={closeUserPopUP} className='absolute flex flex-col gap-3 top-full right-2 min-w-[150px] w-fit max-h-[250px] overflow-y-auto custom-scroll py-2 shadow-lg rounded-sm z-10 bg-white'>
 
                                         <div className='mx-4 border-b-2 pb-1 border-b-gray-700'>
                                             <h1 className='text-base font-dm_sans font-bold '>{validateUser?.userName}</h1>
