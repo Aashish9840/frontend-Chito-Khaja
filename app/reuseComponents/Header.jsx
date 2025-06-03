@@ -38,6 +38,10 @@ const Header = () => {
             link: "/popular"
         },
         {
+            title: "Order History",
+            link: "/order-history"
+        },
+        {
             title: "Order",
             link: "/order"
         }
@@ -145,7 +149,7 @@ const Header = () => {
                 <Link href="/" className={`text-[16px] font-medium font-dm_sans hover:text-blue-700 cursor-pointer ${path === "/" ? "text-blue-700" : ""}`}>Home</Link>
                 <Link href='/category' className={`text-[16px] font-medium font-dm_sans hover:text-blue-700 cursor-pointer ${path === "/category" ? "text-blue-700" : ""}`}>Category</Link>
                 <Link href='/popular' className={`text-[16px] font-medium font-dm_sans hover:text-blue-700 cursor-pointer ${path === "/popular" ? "text-blue-700" : ""}`}>Popular</Link>
-                <Link href='/popular-food' className={`text-[16px] font-medium font-dm_sans hover:text-blue-700 cursor-pointer ${path === "/popular-food" ? "text-blue-700" : ""}`}>Recent</Link>
+                <Link href='/order-history' className={`text-[16px] font-medium font-dm_sans hover:text-blue-700 cursor-pointer ${path === "/popular-food" ? "text-blue-700" : ""}`}>Order History</Link>
             </section>
             <section className='hidden md:flex gap-[30px] lg:gap-[40px] items-center'>
                 <div className='relative'>

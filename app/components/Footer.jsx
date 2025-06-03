@@ -1,8 +1,11 @@
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const Footer = () => {
+    const router = useRouter()
     return (
         <div className=' p-0 mt-10 md:p-6 container'>
             <section className='flex justify-between gap-10 items-center border-b-2 border-b-gray-400 pb-10'>
@@ -32,7 +35,7 @@ const Footer = () => {
                     <main className='flex gap-2 flex-col'>
                         <h1 className='text-xl font-semibold font-commissioner text-black/90 leading-6 mb-3'>Support</h1>
                         <h2 className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Special Offers</h2>
-                        <h2 className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Order History</h2>
+                        <h2 onClick={() => router.push('/order-history')} className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Order History</h2>
                         <h2 className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Track Order</h2>
                     </main>
                     <main className='flex gap-2 flex-col'>
