@@ -4,11 +4,12 @@ import { useState } from "react";
 const usePlaceOrder = () => {
     const [successCart, setSuccessCart] = useState(null);
     const [errorCart, setErrorCart] = useState(null);
+    const [invoiceId, setInvoiceId] = useState(null)
     const placeOrder = async (form) => {
-        console.log(form, "product")
         try {
             setSuccessCart(null);
             setErrorCart(null);
+            setInvoiceId(null);
             const request = await fetch('/api/order/placeOrder', {
                 method: "POST",
                 headers: {
@@ -22,6 +23,7 @@ const usePlaceOrder = () => {
 
             if (request.ok) {
                 setSuccessCart(update.message);
+                setInvoiceId(update.orderId)
             } else {
                 setErrorCart(update.message);
             }
@@ -32,7 +34,8 @@ const usePlaceOrder = () => {
     return {
         successCart,
         errorCart,
-        placeOrder
+        placeOrder,
+        invoiceId
     };
 };
 

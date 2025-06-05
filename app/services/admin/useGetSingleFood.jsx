@@ -9,7 +9,7 @@ const useGetSingleFood = () => {
         try {
             setSingleFood(null);
             setErrorSingleFood(null);
-            const request = await fetch(`/api/food/single-food`, {
+            const request = await fetch(`/api/food/single`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

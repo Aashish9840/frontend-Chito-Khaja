@@ -184,7 +184,7 @@ const Dashboard = () => {
                                         <div className="flex flex-col gap-1">
                                             <label className="font-medium">Description</label>
                                             <textarea
-                                                maxLength={300}
+                                                rows={4}
                                                 className="border resize-none border-gray-300 outline-none rounded-lg px-2 py-2"
                                                 {...register("description")}
                                             />

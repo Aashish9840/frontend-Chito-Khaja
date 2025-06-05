@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form'
 import usePlaceOrder from '../services/users/usePlaceOrder'
 import { errorToast, successToast } from '../reuseComponents/ReactToast'
 import Footer from '../components/Footer'
+import useGetEsewaPayment from '../services/users/useGetEsewaPayment'
 
 const page = () => {
     const imagePath = process.env.NEXT_PUBLIC_IMAGE
@@ -24,7 +25,9 @@ const page = () => {
     const { validateUser, setCallUserValidate } = useContext(userValidate)
     const { successUpdate, errorUpdate, mutatedCart } = useUpdatedCart()
 
-    const { successCart, errorCart, placeOrder } = usePlaceOrder()
+    const { successCart, errorCart, placeOrder, invoiceId } = usePlaceOrder()
+
+    const { esewaDetail, erroresewaDetail, hitEsewaPayment } = useGetEsewaPayment()
     useEffect(() => {
         if (validateUser?.cardData) {
             const arry = []
@@ -34,6 +37,7 @@ const page = () => {
             setProduct(arry)
         }
     }, [validateUser?.cardData])
+
 
     const handleRemove = (id) => {
         setProduct((prevProducts) => {
@@ -102,22 +106,27 @@ const page = () => {
         }
     }, [successCart, errorCart])
 
+    // hit the get-payment-esewa
+    useEffect(() => {
+        if (invoiceId) {
+            hitEsewaPayment(invoiceId)
+        }
+    }, [invoiceId])
+
+    // hit the e-sewa payment form
+
+    useEffect(() => {
+        if (esewaDetail) {
+            document.getElementById("esewa-payment").click()
+        }
+    }, [esewaDetail
+
+    ])
 
     return (
         <div className='container px-4 sm:px-0'>
             <Header />
             <section className='my-4'>
-                {/* <div className='grid grid-cols-2 w-full h-fit'>
-                    <h1 className={`${showOrder.confirmOrder ? "border-b-2 border-b-blue-700 bg-gray-100" : ""} text-center py-2 font-dm_sans font-medium`}
-                        onClick={() => setShowOrder(prev => ({ ...prev, confirmOrder: true, CheckOut: false }))}
-                    >Confirm Order</h1>
-                    <h1 className={`${showOrder.CheckOut ? "border-b-2 border-b-blue-700 bg-gray-100" : ""} text-center py-2 font-dm_sans font-medium`}
-                        onClick={() => setShowOrder(prev => ({ ...prev, confirmOrder: false, CheckOut: true }))}
-                    >CheckOut</h1>
-
-
-                </div> */}
-
                 {showOrder.confirmOrder && <main className='py-4'>
                     <div className='w-full h-[40vh] overflow-y-auto custom-scroll'>
                         <table className='w-full' >
@@ -152,8 +161,6 @@ const page = () => {
                                                     className='h-[55px] w-[55px] rounded-md'
                                                 />
                                             </td>
-
-
 
                                             <td className='text-base font-dm_sans py-1 border-b-2 border-b-gray-100   px-4 '>{items.name}</td>
                                             <td className='text-base font-dm_sans py-1 border-b-2 border-b-gray-100   px-4'>Rs. {items.prize}</td>
@@ -335,6 +342,53 @@ const page = () => {
                 }
             </section>
             <Footer />
+
+            <>
+                <form className='hidden' action="https://rc-epay.esewa.com.np/api/epay/main/v2/form" method="POST">
+                    <input type="text" id='order_price'
+                        name='order_price'
+                        value={esewaDetail ? esewaDetail.order_price : null}
+                    />
+                    <input type="text" id='tax_amount'
+                        name='taxt_amount'
+                        value={esewaDetail ? esewaDetail.tax_amount : null}
+                    />
+                    <input type="text" id='transaction_uuid'
+                        name='transaction_uuid'
+                        value={esewaDetail ? esewaDetail.transation_uuid : null}
+                    />
+                    <input type="text" id='product_code'
+                        name='product_code'
+                        value={esewaDetail ? esewaDetail.product_code : null}
+                    />
+                    <input type="text" id='product_service_charge'
+                        name='product_service_charge'
+                        value={esewaDetail ? esewaDetail.product_service_charge : null}
+                    />
+                    <input type="text" id='product_delivery_charge'
+                        name='product_delivery_charge'
+                        value={esewaDetail ? esewaDetail.product_delivery_charge : null}
+                    />
+                    <input type="text" id='success_url'
+                        name='success_url'
+                        value={esewaDetail ? esewaDetail.success_url : null}
+                    />
+                    <input type="text" id='failure_url'
+                        name='failure_url'
+                        value={esewaDetail ? esewaDetail.failure_url : null}
+                    />
+                    <input type="text" id='secretKey'
+                        name='secretKey'
+                        value={esewaDetail ? esewaDetail.secretKey : null}
+                    /> <input type="text" id='signature'
+                        name='signature'
+                        value={esewaDetail ? esewaDetail.signature : null}
+                    />
+
+                    <button type='submit' value='submit' id="esewa-payment" ></button>
+
+                </form>
+            </>
         </div>
     )
 }

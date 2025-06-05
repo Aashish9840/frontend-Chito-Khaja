@@ -5,12 +5,11 @@ const useGetSingleFood = () => {
     const [singleFood, setSingleFood] = useState(null);
     const [errorSingleFood, setErrorSingleFood] = useState(null);
     const getSingleFood = async (foodId) => {
-        console.log(foodId, "id")
         try {
 
             const request = await fetch("/api/food/single", {
                 method: "POST",
-                headers: {  
+                headers: {
                     'Content-Type': "application/json"
                 },
                 body: JSON.stringify({ foodId })
