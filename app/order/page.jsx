@@ -14,7 +14,7 @@ import useGetEsewaPayment from '../services/users/useGetEsewaPayment'
 const page = () => {
     const imagePath = process.env.NEXT_PUBLIC_IMAGE
     const [product, setProduct] = useState([])
-    const [updatedCart, setUpdatedCart] = useState(null)
+    const [updatedCart, setUpdatedCart] = useState('')
     const [subTotal, setSubTotal] = useState(0)
     const [showOrder, setShowOrder] = useState({
         confirmOrder: true,
@@ -55,7 +55,7 @@ const page = () => {
     };
     // api hit for cartData update after 5 secs based on users remove action
     useEffect(() => {
-        if (updatedCart !== null) {
+        if (updatedCart !== '') {
             const time = setTimeout(() => {
 
                 mutatedCart(updatedCart)
@@ -73,7 +73,7 @@ const page = () => {
     useEffect(() => {
         if (successUpdate) {
             setCallUserValidate(prev => !prev)
-            setUpdatedCart(null)
+            setUpdatedCart('')
             setShowOrder(prev => ({ ...prev, UpdateCart: false }))
         }
     }, [successUpdate])
@@ -347,42 +347,46 @@ const page = () => {
                 <form className='hidden' action="https://rc-epay.esewa.com.np/api/epay/main/v2/form" method="POST">
                     <input type="text" id='order_price'
                         name='order_price'
-                        value={esewaDetail ? esewaDetail.order_price : null}
+                        value={esewaDetail ? esewaDetail.order_price : ''} readOnly
                     />
                     <input type="text" id='tax_amount'
                         name='taxt_amount'
-                        value={esewaDetail ? esewaDetail.tax_amount : null}
+                        value={esewaDetail ? esewaDetail.tax_amount : ''} readOnly
+                    />
+                    <input type="text" id='total_amount'
+                        name='total_amount'
+                        value={esewaDetail ? esewaDetail.total_amount : ''} readOnly
                     />
                     <input type="text" id='transaction_uuid'
                         name='transaction_uuid'
-                        value={esewaDetail ? esewaDetail.transation_uuid : null}
+                        value={esewaDetail ? esewaDetail.transaction_uuid : ''} readOnly
                     />
                     <input type="text" id='product_code'
                         name='product_code'
-                        value={esewaDetail ? esewaDetail.product_code : null}
+                        value={esewaDetail ? esewaDetail.product_code : ''} readOnly
                     />
                     <input type="text" id='product_service_charge'
                         name='product_service_charge'
-                        value={esewaDetail ? esewaDetail.product_service_charge : null}
+                        value={esewaDetail ? esewaDetail.product_service_charge : ''} readOnly
                     />
                     <input type="text" id='product_delivery_charge'
                         name='product_delivery_charge'
-                        value={esewaDetail ? esewaDetail.product_delivery_charge : null}
+                        value={esewaDetail ? esewaDetail.product_delivery_charge : ''} readOnly
                     />
                     <input type="text" id='success_url'
                         name='success_url'
-                        value={esewaDetail ? esewaDetail.success_url : null}
+                        value={esewaDetail ? esewaDetail.success_url : ''} readOnly
                     />
                     <input type="text" id='failure_url'
                         name='failure_url'
-                        value={esewaDetail ? esewaDetail.failure_url : null}
+                        value={esewaDetail ? esewaDetail.failure_url : ''} readOnly
                     />
                     <input type="text" id='secretKey'
                         name='secretKey'
-                        value={esewaDetail ? esewaDetail.secretKey : null}
+                        value={esewaDetail ? esewaDetail.secretKey : ''} readOnly
                     /> <input type="text" id='signature'
                         name='signature'
-                        value={esewaDetail ? esewaDetail.signature : null}
+                        value={esewaDetail ? esewaDetail.signature : ''} readOnly
                     />
 
                     <button type='submit' value='submit' id="esewa-payment" ></button>

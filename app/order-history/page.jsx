@@ -21,7 +21,7 @@ const page = () => {
         <div>
             <Header />
             <main className=' container w-full my-5'>
-                <div className="overflow-x-auto custom-scroll  h-fit max-h-[800px] overflow-y-auto">
+                <div className="overflow-x-auto custom-scroll  h-fit max-h-[600px] overflow-y-auto">
                     <table className="w-full">
                         <thead className="bg-gray-50">
                             <tr>
@@ -80,9 +80,9 @@ const page = () => {
                             <div className="flex flex-col gap-4 px-[30px] py-4">
                                 <h1 className='text-center font-medium text-base text-gray-700 mb-1'>Food Details</h1>
                                 {collectionItem && collectionItem.map((item, index) => (
-                                    <div className='grid grid-cols-7 gap-4 mb-2' key={index}>
+                                    <div className='grid grid-cols-9 gap-4 mb-2' key={index}>
                                         <h1 className=''>{`${index + 1}.`}</h1>
-                                        <h1 className='col-span-2'>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</h1>
+                                        <h1 className='col-span-4'>{item.name.charAt(0).toUpperCase() + item.name.slice(1)}</h1>
                                         <h1 className='col-span-2'>Rs {item.prize}</h1>
                                         <h1 className='col-span-2'>{item.quantity} Qtn</h1>
 
