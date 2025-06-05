@@ -32,7 +32,6 @@ const page = () => {
             orderReportDetail()
         }, [successOrderDelete, updateOrder]
     )
-
     const status = ["pending", 'delivered', 'failed']
 
     const statusClose = useRef()
@@ -46,18 +45,10 @@ const page = () => {
         document.addEventListener("mousedown", closeStatus)
     }, [])
 
-    const totalAmount = (items) => {
-        let calTotal = 0;
-        items.forEach(item => {
-
-            calTotal += Number(item.amount);
-        });
-        return calTotal
-    }
-
     useEffect(() => {
         getOrder()
     }, [successOrderDelete, updateOrder])
+
     useEffect(() => {
         if (successOrderDelete) {
             successToast(successOrderDelete)
@@ -117,9 +108,9 @@ const page = () => {
                                 <tbody>
                                     {order && order.map((item, index) => (
                                         <tr key={index}>
-                                            <td className="border-t py-4 px-8 border-gray-100">{item.userName}</td>
-                                            <td className="border-t py-4 px-8 border-gray-100">{item.address}</td>
-                                            <td className="border-t py-4 px-8 border-gray-100">{totalAmount(item?.foodItems)}</td>
+                                            <td className="border-t py-4 px-8 border-gray-100">{`${item.firstName} ${item.lastName}`}</td>
+                                            <td className="border-t py-4 px-8 border-gray-100">{item.streetAddress}</td>
+                                            <td className="border-t py-4 px-8 border-gray-100">{item.amount}</td>
                                             <td className="border-t py-4 px-8 border-gray-100 cursor-pointer" onClick={() => { setShowItemDetails(!showItemDetail), setCollectionItem(item.foodItems) }}>{item?.foodItems?.length}</td>
                                             <td className="border-t py-4 px-8 border-gray-100">{item.date.split("T")[0]}</td>
                                             <td className="relative border-t py-4 px-8 border-gray-100" >
