@@ -345,12 +345,12 @@ const page = () => {
 
             <>
                 <form className='hidden' action="https://rc-epay.esewa.com.np/api/epay/main/v2/form" method="POST">
-                    <input type="text" id='order_price'
-                        name='order_price'
-                        value={esewaDetail ? esewaDetail.order_price : ''} readOnly
+                    <input type="text" id='amount'
+                        name='amount'
+                        value={esewaDetail ? esewaDetail.amount : ''} readOnly
                     />
                     <input type="text" id='tax_amount'
-                        name='taxt_amount'
+                        name='tax_amount'
                         value={esewaDetail ? esewaDetail.tax_amount : ''} readOnly
                     />
                     <input type="text" id='total_amount'
@@ -381,10 +381,12 @@ const page = () => {
                         name='failure_url'
                         value={esewaDetail ? esewaDetail.failure_url : ''} readOnly
                     />
-                    <input type="text" id='secretKey'
-                        name='secretKey'
-                        value={esewaDetail ? esewaDetail.secretKey : ''} readOnly
-                    /> <input type="text" id='signature'
+                    <input type="text" id='signed_field_names'
+                        name='signed_field_names'
+                        value="total_amount,transaction_uuid,product_code" readOnly
+                    />
+
+                    <input type="text" id='signature'
                         name='signature'
                         value={esewaDetail ? esewaDetail.signature : ''} readOnly
                     />
