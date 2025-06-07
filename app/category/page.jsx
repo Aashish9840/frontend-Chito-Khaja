@@ -89,7 +89,7 @@ const page = () => {
             <Header />
             <main className='py-4 flex flex-col gap-10'>
                 {foodCategory?.map((food, index) => (
-                    <section className='relative w-full h-fit flex flex-col gap-2' key={index}>
+                    <section className='px-2 relative w-full h-fit flex flex-col gap-2' key={index}>
                         <h1 className='text-xl font-semibold font-commissioner'>
                             {food?.title} ({food?.Items?.length})
                         </h1>

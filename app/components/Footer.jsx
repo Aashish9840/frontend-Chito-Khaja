@@ -7,7 +7,7 @@ import React from 'react'
 const Footer = () => {
     const router = useRouter()
     return (
-        <div className=' p-0 mt-10 md:p-6 container'>
+        <div className=' px-4 sm:p-0 mt-10 md:p-6 container'>
             <section className='flex justify-between gap-10 items-center border-b-2 border-b-gray-400 pb-10'>
                 <div className='flex items-center'>
                     <Image
