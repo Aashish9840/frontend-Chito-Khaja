@@ -7,8 +7,9 @@ import Footer from './components/Footer'
 import { useContext } from "react"
 import { usePaymentContext } from "./ContextAPI/PaymentContext"
 import PaymentSuccess from './components/PaymentSuccess'
+import FailurePayment from './components/FailurePayment'
 export default function Home() {
-  const { successPayment, showPaymentDialogue, setShowPaymentDialogue } = useContext(usePaymentContext)
+  const { successPayment, failPayment, showPaymentDialogue, setShowPaymentDialogue } = useContext(usePaymentContext)
   console.log(successPayment, showPaymentDialogue, "hello hello")
   return (
     <>
@@ -17,6 +18,10 @@ export default function Home() {
         <Hero />
         {
           showPaymentDialogue?.showSuccess && <PaymentSuccess successPayment={successPayment} showPaymentDialogue={showPaymentDialogue} setShowPaymentDialogue={setShowPaymentDialogue} />
+        }
+
+        {
+          showPaymentDialogue?.showFail && <FailurePayment failPayment={failPayment} showPaymentDialogue={showPaymentDialogue} setShowPaymentDialogue={setShowPaymentDialogue} />
         }
         <FoodList />
         <Footer />

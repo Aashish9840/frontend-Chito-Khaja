@@ -1,4 +1,4 @@
-import { Calendar, Check, CreditCard, Hash, Package, User, X } from 'lucide-react'
+import { Calendar, CalendarDays, Check, CreditCard, Hash, MapPin, Package, User, X } from 'lucide-react'
 import React from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 const PaymentSuccess = ({ successPayment, showPaymentDialogue, setShowPaymentDialogue }) => {
@@ -43,53 +43,53 @@ const PaymentSuccess = ({ successPayment, showPaymentDialogue, setShowPaymentDia
                                 <div className="flex items-center justify-between p-3 rounded-xl bg-muted/50">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                                            <User className="w-6 h-6 text-primary" />
+                                            <User className="w-6 h-6 text-black/80" />
                                         </div>
                                         <span className="text-muted-foreground font-medium">Customer</span>
                                     </div>
-                                    <span className="font-semibold text-foreground">Aashish Shah</span>
+                                    <span className="font-medium text-foreground">{`${successPayment?.firstName} ${successPayment?.lastName}`}</span>
                                 </div>
 
                                 {/* Payment Method */}
                                 <div className="flex items-center justify-between p-3 rounded-xl bg-muted/50">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                                            <CreditCard className="w-6 h-6 text-primary" />
+                                            <CreditCard className="w-6 h-6 text-black/80" />
                                         </div>
                                         <span className="text-muted-foreground font-medium">Payment</span>
                                     </div>
-                                    <span className="font-semibold text-foreground">esewa</span>
+                                    <span className="font-medium text-foreground">esewa</span>
                                 </div>
 
                                 {/* Items */}
                                 <div className="flex items-center justify-between p-3 rounded-xl bg-muted/50">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                                            <Package className="w-6 h-6 text-primary" />
+                                            <Package className="w-6 h-6 text-black/80" />
                                         </div>
                                         <span className="text-muted-foreground font-medium">Items</span>
                                     </div>
-                                    <span className="font-semibold text-foreground">2 items</span>
+                                    <span className="font-medium text-foreground">{successPayment?.foodItems?.length} items</span>
                                 </div>
 
                                 <div className="flex items-center justify-between p-3 rounded-xl bg-muted/50">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                                            <Package className="w-6 h-6 text-primary" />
+                                            <MapPin className="w-6 h-6 text-black/80" />
                                         </div>
-                                        <span className="text-muted-foreground font-medium">Items</span>
+                                        <span className="text-muted-foreground font-medium">Address</span>
                                     </div>
-                                    <span className="font-semibold text-foreground">2 items</span>
+                                    <span className="font-medium text-foreground">{successPayment?.streetAddress}</span>
                                 </div>
 
                                 <div className="flex items-center justify-between p-3 rounded-xl bg-muted/50">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                                            <Package className="w-6 h-6 text-primary" />
+                                            <CalendarDays className="w-6 h-6 text-black/80" />
                                         </div>
-                                        <span className="text-muted-foreground font-medium">Items</span>
+                                        <span className="text-muted-foreground font-medium">Date</span>
                                     </div>
-                                    <span className="font-semibold text-foreground">2 items</span>
+                                    <span className="font-medium text-foreground">{successPayment?.date?.split("T")[0]}</span>
                                 </div>
                             </div>
 
@@ -98,7 +98,7 @@ const PaymentSuccess = ({ successPayment, showPaymentDialogue, setShowPaymentDia
 
                                     <span className="text-base font-bold text-muted-foreground">Total Amount</span>
 
-                                    <span className="text-base font-bold text-foreground">12345</span>
+                                    <span className="text-base font-bold text-foreground">{successPayment?.amount}</span>
                                 </div>
                             </div>
 
