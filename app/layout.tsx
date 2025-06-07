@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import IsAuthContext from "./ContextAPI/IsAuthContext";
 import SingleFoodContext from "./ContextAPI/SingleFoodContext";
+import PaymentContext from "./ContextAPI/PaymentContext";
 import AuthFormContext from "./ContextAPI/AuthFormContext";
 import IsUserAuthContext from "./ContextAPI/IsUserAuthContext";
 import ArrowTop from "./components/ArrowTop";
@@ -37,24 +38,26 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SingleFoodContext>
-          <AuthFormContext>
-            <IsUserAuthContext>
-              <IsAuthContext>
-                <Toaster
-                  position="top-right"
-                  reverseOrder={false}
-                  gutter={10}
-                  toastOptions={{
-                    className: "",
-                    duration: 5000,
-                    removeDelay: 100,
-                  }}
-                />
-                {children}
-                <ArrowTop />
-              </IsAuthContext>
-            </IsUserAuthContext>
-          </AuthFormContext>
+          <PaymentContext>
+            <AuthFormContext>
+              <IsUserAuthContext>
+                <IsAuthContext>
+                  <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                    gutter={10}
+                    toastOptions={{
+                      className: "",
+                      duration: 5000,
+                      removeDelay: 100,
+                    }}
+                  />
+                  {children}
+                  <ArrowTop />
+                </IsAuthContext>
+              </IsUserAuthContext>
+            </AuthFormContext>
+          </PaymentContext>
         </SingleFoodContext>
       </body>
     </html>

@@ -1,15 +1,16 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { errorToast } from '../../../reuseComponents/ReactToast'
-
+import { usePaymentContext } from '../../../ContextAPI/PaymentContext'
 const page = () => {
     const params = useParams();
     const orderId = params?.id;
     const router = useRouter()
     const [orderInfo, setOrderInfo] = useState(null)
     const [errorOrderInfo, setErrorOrderInfo] = useState(null)
-    console.log(orderId, "orderId")
+
+    const { setSucccessPayment, setShowPaymentDialogue } = useContext(usePaymentContext)
     const getOrderDetails = async (orderId) => {
         try {
             setErrorOrderInfo(null)
@@ -43,6 +44,8 @@ const page = () => {
     useEffect(() => {
         if (orderInfo) {
             router.push('/')
+            setSucccessPayment(orderInfo)
+            setShowPaymentDialogue(prev => ({ ...prev, showSuccess: true, showFail: false }))
         }
         if (errorOrderInfo
 
