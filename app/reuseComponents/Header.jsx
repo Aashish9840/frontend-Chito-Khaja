@@ -184,7 +184,7 @@ const Header = () => {
                 </div>
                 <div className='relative'>
                     {
-                        validateUser ?
+                        validateUser?.role === "user" ?
                             <div className='relative' onClick={() => setShowForm(prev => ({ ...prev, loginInfo: !prev.loginInfo }))}>
                                 <div className=' flex justify-center items-center w-[40px] h-[40px] rounded-full p-2 border cursor-pointer bg-bulk-white font-semibold'>
                                     {validateUser?.userName.substring(0, 2).toUpperCase()}
@@ -371,7 +371,7 @@ const Header = () => {
                     {/* signup button for mobile */}
                     <div className=''>
                         {
-                            validateUser ?
+                            validateUser?.role === 'user' ?
                                 <div className='relative' onClick={() => setShowForm(prev => ({ ...prev, useLoginInfo: !prev.useLoginInfo }))}>
                                     <div className=' flex justify-center items-center w-[40px] h-[40px] rounded-full p-2 border cursor-pointer bg-bulk-white font-semibold'>
                                         {validateUser?.userName.substring(0, 2).toUpperCase()}
