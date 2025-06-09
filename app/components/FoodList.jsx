@@ -60,7 +60,7 @@ const FoodList = () => {
                 <h1 className='text-[18px] font-bold font-liber md:text-2xl '>Discover Our Tasty Menu</h1>
                 <h2 className='text-base font-inter text-gray-600'>From crispy bites to hearty meals, explore a variety of delicious options made fresh for every craving. Whether you're in the mood for traditional flavors or modern favorites, Chito Khaja has something to satisfy every appetite.</h2>
                 <div className='relative my-6'>
-                    <div className=' flex mx-[30px] gap-[30px] items-center overflow-x-hidden scroll-smooth' ref={scrollRef}>
+                    <div className=' flex mx-[30px] gap-[30px] items-center overflow-x-auto scroll-hide' ref={scrollRef}>
                         {menu.map((menuItem, index) => (
                             <div key={index} className='w-fit flex flex-col gap-3 flex-shrink-0 cursor-pointer' onClick={() => handleCategory(menuItem.title)}>
                                 <Image

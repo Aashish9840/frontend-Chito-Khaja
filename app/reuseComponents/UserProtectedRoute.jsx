@@ -14,7 +14,7 @@ const UserProtectedRoute = ({ children }) => {
         if (loadingUser) return;
 
 
-        if (!validateUser && path === '/order') {
+        if (!validateUser && path === '/order' || validateUser?.role === "admin" || validateUser?.role === "staff") {
             router.push('/')
             setShowLogIn(true)
         }

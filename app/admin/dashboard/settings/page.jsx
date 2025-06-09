@@ -233,7 +233,7 @@ const page = () => {
                                                 </div>
                                                 <div>
                                                     <label className="block text-black font-medium mb-1">Date of Birth</label>
-                                                    <h1 className="text-gray-600 font-medium text-sm" > {adminInfo?.date.split("T")[0]}</h1>
+                                                    <h1 className="text-gray-600 font-medium text-sm" > {adminInfo?.date?.split("T")[0]}</h1>
                                                 </div>
                                             </div>
                                         </div>}

@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children }) => {
         if (loading) return;
 
 
-        if (!authUser && path.startsWith("/admin")) {
+        if (!authUser && path.startsWith("/admin") || authUser?.role === "user") {
             router.push('/admin')
         } else {
 
