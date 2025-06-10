@@ -18,6 +18,7 @@ const page = () => {
     const [password, setPassword] = useState(null)
     const [dialogue, setDialogue] = useState(false)
     const [showStatusUpdate, setShowStatusUpdate] = useState(null)
+    const [paymentUpdate, setPaymentUpdate] = useState(null)
     const { order, errorOrder, getOrder } = useGetOrder()
 
     const [showItemDetail, setShowItemDetails] = useState(false)
@@ -33,6 +34,7 @@ const page = () => {
         }, [successOrderDelete, updateOrder]
     )
     const status = ["pending", 'delivered', 'failed']
+    const paymentStatus = ["pending", 'success', 'failed']
 
     const statusClose = useRef()
 
@@ -40,6 +42,7 @@ const page = () => {
         const closeStatus = (e) => {
             if (!statusClose?.current?.contains(e.target)) {
                 setShowStatusUpdate(null)
+                setPaymentUpdate(null)
             }
         }
         document.addEventListener("mousedown", closeStatus)
@@ -65,7 +68,8 @@ const page = () => {
 
         if (updateOrder) {
             successToast(updateOrder)
-            setShowStatusUpdate(false)
+            setShowStatusUpdate(null)
+            setPaymentUpdate(null)
         }
         if (errorOrderUpdate) {
             errorToast(errorOrderUpdate)
@@ -101,6 +105,7 @@ const page = () => {
                                         <th className="py-4 px-8 text-start /70 font-medium">Total Amount</th>
                                         <th className="py-4 px-8 text-start /70 font-medium">Items</th>
                                         <th className="py-4 px-8 text-start /70 font-medium">Date</th>
+                                        <th className="py-4 px-8 text-start /70 font-medium">Pyment</th>
                                         <th className="py-4 px-8 text-start /70 font-medium">Status</th>
                                         <th className="py-4 px-8 text-start /70 font-medium">Action</th>
                                     </tr>
@@ -113,6 +118,22 @@ const page = () => {
                                             <td className="border-t py-4 px-8 border-gray-100">{item.amount}</td>
                                             <td className="border-t py-4 px-8 border-gray-100 cursor-pointer" onClick={() => { setShowItemDetails(!showItemDetail), setCollectionItem(item.foodItems) }}>{item?.foodItems?.length}</td>
                                             <td className="border-t py-4 px-8 border-gray-100">{item.date.split("T")[0]}</td>
+                                            <td className="relative border-t py-4 px-8 border-gray-100">
+
+                                                <h1 className={`py-[4px] px-2 w-fit rounded-lg font-medium cursor-pointer ${item.payment.toLowerCase() === "pending" ? "border border-orange-400 text-orange-400" : item.payment.toLowerCase() === "delivered" ? "border border-green-500 text-green-500" : "border border-red-500 text-red-500"}`}
+                                                    onClick={() =>
+                                                        setPaymentUpdate(index)
+                                                    }
+
+                                                >{item.payment}</h1>
+                                                {paymentUpdate === index && <div ref={statusClose} className='absolute top-[80%] bg-white shadow-lg z-[10] border border-white rounded-md max-h-[120px]  oveflow-y-auto flex flex-col gap-1 w-[60%]'>
+                                                    {paymentStatus.map((element, index) => (
+                                                        <h1 key={index} className='px-3 py-[4px] hover:bg-blue-50'>{element}</h1>
+
+                                                    ))}
+                                                </div>}
+                                            </td>
+
                                             <td className="relative border-t py-4 px-8 border-gray-100" >
                                                 <h1 className={`py-[4px] px-2 w-fit rounded-lg font-medium cursor-pointer ${item.status.toLowerCase() === "pending" ? "border border-orange-400 text-orange-400" : item.status.toLowerCase() === "delivered" ? "border border-green-500 text-green-500" : "border border-red-500 text-red-500"}`}
                                                     onClick={() =>
@@ -154,9 +175,6 @@ const page = () => {
                                                         </Popover.Content>
                                                     </Popover.Portal>
                                                 </Popover.Root>
-
-
-
                                             </td>
                                         </tr>
                                     ))}

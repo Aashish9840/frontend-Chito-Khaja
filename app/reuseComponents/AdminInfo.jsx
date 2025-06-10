@@ -36,8 +36,8 @@ const AdminInfo = () => {
     return (
         <div className="py-4 h-fit border-b px-[40px] border-b-gray-200 flex justify-end">
             <section className='relative'>
-                <div className='rounded-[100%] px-2 py-1 bg-gray-100 cursor-pointer' onClick={() => { setUser(!user) }}>
-                    <h1>AA</h1>
+                <div className='rounded-[100%] flex items-center justify-center p-2 bg-gray-300 cursor-pointer' onClick={() => { setUser(!user) }}>
+                    <h1 className='text-white font-semibold font-dm_sans text-base'>{authUser?.userName?.substring(0, 2).toUpperCase()}</h1>
                 </div>
                 {user && authUser && <div ref={removeAdminInfo} className='absolute right-[10px] rounded-md top-full w-[150px] min-h-[180px] overflow-y-auto shadow-md z-20 bg-white flex flex-col'>
 
