@@ -11,6 +11,8 @@ import { errorToast, successToast } from '../../../reuseComponents/ReactToast'
 import useUpdateOrderStatus from '../../../services/admin/useUpdateOrderStatus'
 import * as Dialog from "@radix-ui/react-dialog"
 import useOrderReport from '../../../services/admin/useOrderReport'
+import usePaymentUpdate from '../../../services/admin/usePaymentUpdate'
+
 const page = () => {
 
     const [openPopoverIndex, setOpenPopoverIndex] = useState(null)
@@ -26,6 +28,7 @@ const page = () => {
     const [collectionItem, setCollectionItem] = useState(null)
     const { successOrderDelete, errorOrderDelete, orderDelete } = useDeleteOrder()
     const { updateOrder, errorOrderUpdate, getOrderUpdate } = useUpdateOrderStatus()
+    const { updatePayment, errorPaymentUpdate, getPaymentUpdate } = usePaymentUpdate()
     const { orderReport, errorOrderReport, orderReportDetail } = useOrderReport()
 
     useEffect(
@@ -50,7 +53,7 @@ const page = () => {
 
     useEffect(() => {
         getOrder()
-    }, [successOrderDelete, updateOrder])
+    }, [successOrderDelete, updateOrder, updatePayment])
 
     useEffect(() => {
         if (successOrderDelete) {
@@ -69,7 +72,6 @@ const page = () => {
         if (updateOrder) {
             successToast(updateOrder)
             setShowStatusUpdate(null)
-            setPaymentUpdate(null)
         }
         if (errorOrderUpdate) {
             errorToast(errorOrderUpdate)
@@ -77,6 +79,15 @@ const page = () => {
 
     }, [updateOrder, errorOrderUpdate])
 
+    useEffect(() => {
+        if (updatePayment) {
+            successToast(updatePayment)
+            setPaymentUpdate(null)
+        }
+        if (errorPaymentUpdate) {
+            errorToast(errorPaymentUpdate)
+        }
+    }, [updatePayment, errorPaymentUpdate])
 
     return (
         <div className="flex min-h-screen">
@@ -120,7 +131,7 @@ const page = () => {
                                             <td className="border-t py-4 px-8 border-gray-100">{item.date.split("T")[0]}</td>
                                             <td className="relative border-t py-4 px-8 border-gray-100">
 
-                                                <h1 className={`py-[4px] px-2 w-fit rounded-lg font-medium cursor-pointer ${item.payment.toLowerCase() === "pending" ? "border border-orange-400 text-orange-400" : item.payment.toLowerCase() === "delivered" ? "border border-green-500 text-green-500" : "border border-red-500 text-red-500"}`}
+                                                <h1 className={`py-[4px] px-2 w-fit rounded-lg font-medium cursor-pointer ${item.payment.toLowerCase() === "pending" ? "border border-orange-400 text-orange-400" : item.payment.toLowerCase() === "success" ? "border border-green-500 text-green-500" : "border border-red-500 text-red-500"}`}
                                                     onClick={() =>
                                                         setPaymentUpdate(index)
                                                     }
@@ -128,7 +139,9 @@ const page = () => {
                                                 >{item.payment}</h1>
                                                 {paymentUpdate === index && <div ref={statusClose} className='absolute top-[80%] bg-white shadow-lg z-[10] border border-white rounded-md max-h-[120px]  oveflow-y-auto flex flex-col gap-1 w-[60%]'>
                                                     {paymentStatus.map((element, index) => (
-                                                        <h1 key={index} className='px-3 py-[4px] hover:bg-blue-50'>{element}</h1>
+                                                        <h1 key={index} className='px-3 py-[4px] hover:bg-blue-50'
+                                                            onClick={() => getPaymentUpdate(item._id, element)}
+                                                        >{element}</h1>
 
                                                     ))}
                                                 </div>}
