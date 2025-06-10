@@ -34,7 +34,7 @@ const Footer = () => {
                     </main>
                     <main className='flex gap-2 flex-col'>
                         <h1 className='text-xl font-semibold font-commissioner text-black/90 leading-6 mb-3'>Support</h1>
-                        <h2 className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Special Offers</h2>
+                        <h2 className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Features</h2>
                         <h2 onClick={() => router.push('/order-history')} className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Order History</h2>
                         <h2 className='text-[14px] cursor-pointer  font-dm_sans font-medium text-black/95'>Track Order</h2>
                     </main>
