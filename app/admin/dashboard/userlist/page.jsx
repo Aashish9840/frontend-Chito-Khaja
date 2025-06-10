@@ -21,6 +21,7 @@ const page = () => {
         getUser()
     }, [successUserDelete, successRoleUpdate])
 
+
     useEffect(() => {
         if (successUserDelete) {
             successToast(successUserDelete)
