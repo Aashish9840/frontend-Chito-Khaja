@@ -53,6 +53,7 @@ const page = () => {
                 <h1 className="text-base px-5 pt-5 font-medium">
                     Users list
                 </h1>
+
                 <div className="w-full px-7 mt-5">
                     <div className="overflow-auto custom-scroll max-h-[580px]">
                         <table className='w-full'>
@@ -93,8 +94,6 @@ const page = () => {
                                                                 <Trash2 color="#e82c2c" size={16} />
                                                                 <h1>Delete</h1>
                                                             </div>
-
-
                                                         </div>
 
                                                     </Popover.Content>
