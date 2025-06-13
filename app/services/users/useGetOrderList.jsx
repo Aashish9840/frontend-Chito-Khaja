@@ -3,12 +3,14 @@ import { useState } from "react";
 
 const useGetOrderList = () => {
     const [orderDetails, setOrderDetails] = useState(null);
+    const [latestPdf, setLatestPdf] = useState(null)
     const [errorOrder, setErrorOrder] = useState(null);
     const userOrder = async () => {
 
         try {
             setOrderDetails(null);
             setErrorOrder(null);
+            setLatestPdf(null)
 
             const request = await fetch('/api/order/userOrder', {
                 method: "GET",
@@ -21,7 +23,9 @@ const useGetOrderList = () => {
             const update = await request.json();
 
             if (request.ok) {
-                setOrderDetails(update.data);
+                setOrderDetails(update.data[0].allData);
+                setLatestPdf(update.data[0].latestPdf[0].pdfFile);
+
             } else {
                 setErrorOrder(list.message);
             }
@@ -31,6 +35,7 @@ const useGetOrderList = () => {
     };
     return {
         orderDetails,
+        latestPdf,
         errorOrder,
         userOrder
     };
