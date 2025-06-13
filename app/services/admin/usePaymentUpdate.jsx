@@ -13,7 +13,8 @@ const usePaymentUpdate = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ orderId: orderId, status: status })
+                body: JSON.stringify({ orderId: orderId, status: status }),
+                credentials: 'include'
             });
             const list = await request.json();
 

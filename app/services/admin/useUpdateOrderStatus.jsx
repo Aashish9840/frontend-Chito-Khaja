@@ -5,7 +5,6 @@ const useUpdateOrderStatus = () => {
     const [updateOrder, setUpdateOrder] = useState(null);
     const [errorOrderUpdate, setErrorOrderUpdate] = useState(null);
     const getOrderUpdate = async (orderId, status) => {
-        console.log("hello it is clicked")
         try {
             setUpdateOrder(null);
             setErrorOrderUpdate(null);
@@ -14,7 +13,8 @@ const useUpdateOrderStatus = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ orderId: orderId, status: status })
+                body: JSON.stringify({ orderId: orderId, status: status }),
+                credentials: "include"
             });
             const list = await request.json();
 
