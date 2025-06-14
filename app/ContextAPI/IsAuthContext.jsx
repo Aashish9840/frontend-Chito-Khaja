@@ -28,7 +28,7 @@ const IsAuthContext = ({ children }) => {
             } catch (error) {
                 setErrorAuth(error.message)
             } finally {
-                setLoading(false);
+                setLoading(false)
             }
         }
         checkAuth();

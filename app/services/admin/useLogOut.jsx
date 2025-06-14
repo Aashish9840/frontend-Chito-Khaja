@@ -10,7 +10,7 @@ const useLogOut = () => {
         try {
             setSuccessLogout(null);
             setErrorLogOut(null);
-            const request = await fetch(`/api/admin/logout`, {
+            const request = await fetch(`/api/admin/adminLogOut`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
