@@ -72,8 +72,8 @@ const General = () => {
                 <div className="relative w-full xl:w-[90%] mt-2 bg-white px-6 lg:pr-[100px] xl:pr-[200px] py-10 rounded-2xl shadow-lg">
 
                     {edit ?
-                        <button type="submit" form="admin-edit-form" className='absolute top-5 right-10 px-8 py-2 rounded-lg bg-blue-600 cursor-pointer text-white' >Save</button> :
-                        <button className='absolute top-5 right-10 px-8 py-2 rounded-lg bg-blue-600 cursor-pointer text-white' onClick={(e) => { e.preventDefault(), setEdit(true) }}>Edit </button>}
+                        <button type="submit" form="admin-edit-form" className='absolute top-3 right-6 px-8 py-2 rounded-lg bg-blue-600 cursor-pointer text-white' >Save</button> :
+                        <button className='absolute top-3 right-6 px-8 py-2 rounded-lg bg-blue-600 cursor-pointer text-white' onClick={(e) => { e.preventDefault(), setEdit(true) }}>Edit </button>}
 
 
 
@@ -97,7 +97,7 @@ const General = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-8">
+                        <div className="grid grid-cols-2 gap-3 sm:gap-8">
                             <div>
                                 <label className="block text-gray-700 font-medium mb-1">Gender</label>
                                 <input
@@ -116,7 +116,7 @@ const General = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-8">
+                        <div className="grid grid-cols-2 gap-3 sm:gap-8">
                             <div>
                                 <label className="block text-gray-700 font-medium mb-1">Education</label>
                                 <input type="text"
@@ -134,7 +134,7 @@ const General = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-8">
+                        <div className="grid grid-cols-2 gap-5 lg:gap-8">
                             <div>
                                 <label className="block text-gray-700 font-medium mb-1">Phone Number</label>
                                 <input type="text"
@@ -151,7 +151,7 @@ const General = () => {
                         </div>
                     </form> :
                         <div className="flex flex-col gap-4 w-full">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-8">
+                            <div className="grid grid-cols-2 gap-3 sm:gap-8">
                                 <div>
                                     <label className="block text-black font-medium mb-1">Name</label>
                                     <h1 className="text-gray-600 font-medium text-sm" > {adminInfo?.userName}</h1>
@@ -162,7 +162,7 @@ const General = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-8">
+                            <div className="grid grid-cols-2 gap-3 sm:gap-8">
                                 <div>
                                     <label className="block text-black font-medium mb-1">Gender</label>
                                     <h1 className="text-gray-600 font-medium text-sm" > {adminInfo?.gender}</h1>
@@ -173,7 +173,7 @@ const General = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-8">
+                            <div className="grid grid-cols-2 gap-3 sm:gap-8">
                                 <div>
                                     <label className="block text-black font-medium mb-1">Education</label>
                                     <h1 className="text-gray-600 font-medium text-sm" > {adminInfo?.education}</h1>
@@ -184,7 +184,7 @@ const General = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-8">
+                            <div className="grid grid-cols-2 gap-3 sm:gap-8">
                                 <div>
                                     <label className="block text-black font-medium mb-1">Phone Number</label>
                                     <h1 className="text-gray-600 font-medium text-sm" > {adminInfo?.phone}</h1>

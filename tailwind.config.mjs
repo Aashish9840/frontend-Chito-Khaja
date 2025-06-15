@@ -27,6 +27,20 @@ export default {
         "bulk-primary": "#64748b",
         "bulk-white": "#f1f1f1",
       },
+      keyframes: {
+        slideDown: {
+          from: { height: "0px" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        slideUp: {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0px" },
+        },
+      },
+      animation: {
+        slideDown: "slideDown 700ms linear",
+        slideUp: "slideUp 700ms linear",
+      },
     },
   },
   plugins: [],
