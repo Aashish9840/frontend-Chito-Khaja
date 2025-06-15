@@ -86,14 +86,14 @@ const Dashboard = () => {
     }, [successEditFood, errorEditFood])
 
     return (
-        <div className="flex min-h-screen ">
+        <div className="flex min-h-screen w-screen ">
             <SidePanel />
-            <div className="w-full md:max-w-[85%] bg-slate-50">
+            <div className="w-full bg-slate-50">
                 <AdminInfo />
                 <h1 className="tex-2xl px-5 pt-5 font-medium">
                     Food Items list
                 </h1>
-                <div className="w-full px-7 mt-5">
+                <div className="px-7 mt-5">
                     <div className="overflow-auto custom-scroll max-h-[580px]">
 
                         <table className="w-full">

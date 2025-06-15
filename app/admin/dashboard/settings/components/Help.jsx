@@ -31,8 +31,8 @@ const Help = () => {
     return (
         <div className=''>
 
-            <h1 className='text-2xl font-inter font-semibold'>Learn More About Chito Khaja</h1>
-            <section className='my-10'>
+            <h1 className='text-xl sm:text-2xl font-inter font-semibold'>Learn More About Chito Khaja</h1>
+            <section className='my-4'>
                 <FAQ QA={chitoKhajaFAQs} />
             </section>
         </div>

@@ -22,7 +22,7 @@ export const AccordionTrigger = React.forwardRef(
         <Accordion.Header className="flex">
             <Accordion.Trigger
                 className={classNames(
-                    "group flex h-[45px] flex-1 font-dm_sans font-normal text-lg cursor-default items-center justify-between leading-none outline-none",
+                    "group flex h-[45px] flex-1 font-dm_sans font-medium text-lg cursor-default items-center justify-between leading-none outline-none",
                     className,
                 )}
                 {...props}
@@ -48,7 +48,7 @@ export const AccordionContent = React.forwardRef(
             {...props}
             ref={forwardedRef}
         >
-            <div className="px-0 py-4">{children}</div>
+            <div className="px-2 py-4">{children}</div>
         </Accordion.Content>
     ),
 );

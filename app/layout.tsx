@@ -7,6 +7,8 @@ import SingleFoodContext from "./ContextAPI/SingleFoodContext";
 import PaymentContext from "./ContextAPI/PaymentContext";
 import AuthFormContext from "./ContextAPI/AuthFormContext";
 import IsUserAuthContext from "./ContextAPI/IsUserAuthContext";
+import SetMenu from "./ContextAPI/SetMenu";
+
 import ArrowTop from "./components/ArrowTop";
 
 const geistSans = Geist({
@@ -42,18 +44,20 @@ export default function RootLayout({
             <AuthFormContext>
               <IsUserAuthContext>
                 <IsAuthContext>
-                  <Toaster
-                    position="top-right"
-                    reverseOrder={false}
-                    gutter={10}
-                    toastOptions={{
-                      className: "",
-                      duration: 5000,
-                      removeDelay: 100,
-                    }}
-                  />
-                  {children}
-                  <ArrowTop />
+                  <SetMenu>
+                    <Toaster
+                      position="top-right"
+                      reverseOrder={false}
+                      gutter={10}
+                      toastOptions={{
+                        className: "",
+                        duration: 5000,
+                        removeDelay: 100,
+                      }}
+                    />
+                    {children}
+                    <ArrowTop />
+                  </SetMenu>
                 </IsAuthContext>
               </IsUserAuthContext>
             </AuthFormContext>

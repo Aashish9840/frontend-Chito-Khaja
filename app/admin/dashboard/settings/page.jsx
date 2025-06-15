@@ -17,8 +17,8 @@ const page = () => {
             <SidePanel />
             <section className="w-full md:w-[85%] bg-slate-50 max-h-[screen] h-[90vh]">
                 <AdminInfo />
-                <div className='flex flex-col mb-6 px-3 md:flex-row w-full h-full gap-3'>
-                    <section className='w-full sm:w-[20vw] border-r flex flex-row md:flex-col gap-5 border-r-gray-300 p-1 sm:p-3 md:p-8'>
+                <div className='flex flex-col mb-6 px-3 lg:flex-row w-full h-full gap-3'>
+                    <section className='w-full lg:w-[20%] lg:border-r flex flex-row lg:flex-col gap-5 lg:border-r-gray-300 p-1 lg:p-8'>
                         {settingList.map((list, index) => (
                             <h1 key={index} className={`py-2 ${showList === list ? "bg-gray-300 text-blue-700" : ""} hover:bg-gray-300 hover:text-blue-700 font-medium px-2 sm:px-4 text-[14px] sm:text-sm rounded-lg`} onClick={() => setShowList(list)}>{list}</h1>
                         ))}
