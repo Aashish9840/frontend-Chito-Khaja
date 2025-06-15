@@ -38,10 +38,14 @@ const AdminInfo = () => {
             console.log("hello guys")
             if (!removeAdminInfo?.current?.contains(e.target)) {
                 setUser(false)
+                setCustomMenuStyle(false)
 
             }
         }
         document.addEventListener("mousedown", adminRemove)
+        return () => {
+            document.removeEventListener("mousedown", adminRemove);
+        };
     }, [])
 
     const adminLink = [
@@ -75,7 +79,7 @@ const AdminInfo = () => {
 
             {/* show menu list in mobile view */}
 
-            <section className={` fixed inset-0 w-[50vw] bg-white  shadow-lg transition-all duration-500 ease-out ${showMenu ? "translate-x-0 z-[100] " : "-translate-x-full opacity-0"} `}>
+            <section ref={removeAdminInfo} className={` fixed inset-0 w-[50vw] bg-white  shadow-lg transition-all duration-500 ease-out ${showMenu ? "translate-x-0 z-[100] " : "-translate-x-full opacity-0"} `}>
 
                 <div className='flex flex-col gap-2 py-6'>
 
