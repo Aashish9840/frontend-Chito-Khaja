@@ -7,6 +7,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import OrderHistoryTable from "./components/OrderHistoryTable"
 import * as Popover from '@radix-ui/react-popover'
 import { Ellipsis } from 'lucide-react'
+import { errorToast } from '../reuseComponents/ReactToast'
 
 const page = () => {
 
@@ -20,9 +21,28 @@ const page = () => {
         fromDate: "",
         toDate: ""
     })
+
     const { orderDetails, errorOrder, userOrder, latestPdf } = useGetOrderList()
 
-    console.log(pdfPath, latestPdf)
+    const filterOrder = () => {
+
+        const date = new Date()
+        // convert date string to dateobject
+        const toDate = new Date(dateFilter.toDate)
+        const fromDate = new Date(dateFilter.fromDate)
+
+
+        if (!dateFilter.toDate || !dateFilter.fromDate) {
+            return errorToast("Filter Date is required")
+        }
+        if (toDate > date || fromDate > date) {
+            return errorToast("Date shouldnot exceed today date")
+        }
+
+        userOrder(dateFilter.fromDate, dateFilter.toDate)
+
+    }
+
     useEffect(() => {
         userOrder()
     }, [])
@@ -32,7 +52,7 @@ const page = () => {
 
             <main className=' container w-full my-5'>
                 <section className='flex justify-end items-center mb-7 gap-5'>
-                    <div className=' cursor-pointer' onClick={() => setShowDatePopover(!showDatePopover)}>
+                    <div className=' cursor-pointer'>
                         <Popover.Root open={showDatePopover} onOpenChange={setShowDatePopover}>
                             <Popover.Trigger asChild >
                                 <svg xmlns="http://www.w3.org/2000/svg" className='border-2 border-[#253acd] rounded-md' width="28" height="28" viewBox="0 0 24 24">
@@ -41,27 +61,40 @@ const page = () => {
                             </Popover.Trigger>
                             <Popover.Portal>
                                 <Popover.Content
-                                    className="w-[250px] rounded bg-white border-white p-2 shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] will-change-[transform,opacity] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_theme(colors.violet7)] data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=top]:animate-slideDownAndFade"
+                                    className="w-fit relative right-10 rounded bg-white border-white p-2 shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2)] will-change-[transform,opacity] focus:shadow-[0_10px_38px_-10px_hsla(206,22%,7%,.35),0_10px_20px_-15px_hsla(206,22%,7%,.2),0_0_0_2px_theme(colors.violet7)] data-[state=open]:data-[side=bottom]:animate-slideUpAndFade data-[state=open]:data-[side=left]:animate-slideRightAndFade data-[state=open]:data-[side=right]:animate-slideLeftAndFade data-[state=open]:data-[side=top]:animate-slideDownAndFade"
                                     sideOffset={5}
                                 >
-                                    <div className="flex flex-col gap-1 border-none ">
-                                        <div className='flex gap-2 items-center justify-end'>
+                                    <div className="flex flex-col gap-4 border-none p-3">
+                                        <h1 className='text-center font-medium font-dm_sans text-xl'>Refine Results</h1>
+                                        <section className='flex gap-5 items-center'>
+                                            <div className='flex flex-col gap-1'>
+                                                <label htmlFor="">Start Date</label>
+                                                <input type="date" className=' px-2 py-1 outline-none border-2 rounded-md border-gray-500' placeholder='Start Date'
+                                                    onChange={(e) => setDateFilter(prev => ({ ...prev, fromDate: e.target.value }))}
+                                                />
+
+                                            </div>
+                                            <div className='flex flex-col gap-1'>
+                                                <label htmlFor="">End Date</label>
+                                                <input type="date" className='px-2 py-1 outline-none border-2 rounded-md border-gray-500' placeholder='End Date'
+                                                    onChange={(e) => setDateFilter(prev => ({ ...prev, toDate: e.target.value }))}
+                                                />
+                                            </div>
+                                        </section>
+                                        <div className='flex gap-2 items-center justify-end mt-5'>
+
+
+                                            <button className='text-lg font-medium text-gray-700' onClick={() => filterOrder()}>
+                                                Apply
+                                            </button>
+
                                             <Popover.Close
 
-
                                                 aria-label="Close"
+                                                className='border rounded-md px-5 py-1 bg-blue-700 text-white hover:bg-blue-600'
                                             >
-                                                <button className='text-lg font-medium text-gray-700'>
-                                                    Apply
-                                                </button>
-                                            </Popover.Close>
-                                            <Popover.Close
+                                                Close
 
-                                                aria-label="Close"
-                                            >
-                                                <button className='border rounded-md px-5 py-1 bg-blue-700 text-white hover:bg-blue-600'>
-                                                    Close
-                                                </button>
 
                                             </Popover.Close>
                                         </div>

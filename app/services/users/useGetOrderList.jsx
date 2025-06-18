@@ -5,14 +5,14 @@ const useGetOrderList = () => {
     const [orderDetails, setOrderDetails] = useState(null);
     const [latestPdf, setLatestPdf] = useState(null)
     const [errorOrder, setErrorOrder] = useState(null);
-    const userOrder = async () => {
+    const userOrder = async (fromDate, toDate) => {
 
         try {
             setOrderDetails(null);
             setErrorOrder(null);
             setLatestPdf(null)
 
-            const request = await fetch('/api/order/userOrder', {
+            const request = await fetch(`/api/order/userOrder?fromDate=${fromDate}&&toDate=${toDate}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': "application/json"
