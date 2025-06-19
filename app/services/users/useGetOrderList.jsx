@@ -5,15 +5,17 @@ const useGetOrderList = () => {
     const [orderDetails, setOrderDetails] = useState(null);
     const [latestPdf, setLatestPdf] = useState(null)
     const [errorOrder, setErrorOrder] = useState(null);
+    const [successOrder, SetSuccessOrder] = useState(false)
     const userOrder = async (fromDate, toDate) => {
 
         try {
             setOrderDetails(null);
             setErrorOrder(null);
             setLatestPdf(null)
+            SetSuccessOrder(false)
 
             const request = await fetch(`/api/order/userOrder?fromDate=${fromDate}&&toDate=${toDate}`, {
-                method: "GET",
+                method: "POST",
                 headers: {
                     'Content-Type': "application/json"
                 },
@@ -23,11 +25,12 @@ const useGetOrderList = () => {
             const update = await request.json();
 
             if (request.ok) {
-                setOrderDetails(update.data[0].allData);
-                setLatestPdf(update.data[0].latestPdf[0].pdfFile);
-
+                setOrderDetails(update.data[0]?.allData);
+                setLatestPdf(update.data[0].latestPdf[0]?.pdfFile);
+                SetSuccessOrder(true)
+                return
             } else {
-                setErrorOrder(list.message);
+                setErrorOrder(update.message);
             }
         } catch (error) {
             setErrorOrder(error.message);
@@ -37,6 +40,7 @@ const useGetOrderList = () => {
         orderDetails,
         latestPdf,
         errorOrder,
+        successOrder,
         userOrder
     };
 };

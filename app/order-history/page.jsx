@@ -7,7 +7,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import OrderHistoryTable from "./components/OrderHistoryTable"
 import * as Popover from '@radix-ui/react-popover'
 import { Ellipsis } from 'lucide-react'
-import { errorToast } from '../reuseComponents/ReactToast'
+import { errorToast, successToast } from '../reuseComponents/ReactToast'
 
 const page = () => {
 
@@ -22,7 +22,7 @@ const page = () => {
         toDate: ""
     })
 
-    const { orderDetails, errorOrder, userOrder, latestPdf } = useGetOrderList()
+    const { orderDetails, errorOrder, userOrder, successOrder, latestPdf } = useGetOrderList()
 
     const filterOrder = () => {
 
@@ -46,6 +46,21 @@ const page = () => {
     useEffect(() => {
         userOrder()
     }, [])
+
+    console.log(errorOrder, "error")
+    useEffect(() => {
+        if (successOrder) {
+            successToast("User Order History")
+            setDateFilter({
+                fromDate: "",
+                toDate: ""
+            })
+            setShowDatePopover(false)
+        }
+        if (errorOrder) {
+            errorToast(errorOrder)
+        }
+    }, [errorOrder, successOrder])
     return (
         <div>
             <Header />
