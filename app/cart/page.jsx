@@ -52,7 +52,6 @@ const PageContent = () => {
 
     getCart(foodId, quantity, prize, name, image);
   };
-
   useEffect(() => {
     if (successCart) {
       successToast(successCart);

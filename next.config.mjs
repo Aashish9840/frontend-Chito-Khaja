@@ -11,7 +11,7 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["localhost", "backend-chito-khaja.onrender.com"],
+    domains: ["localhost", "https://backend-chito-khaja.onrender.com"],
   },
 };
 
